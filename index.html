@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>devidtur | Links</title>
-    <!-- Google Fonts - Rubik -->
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-color: #0b0c10;
-            --card-bg: #15171e;
-            --card-hover: #1e212b;
+            --bg-color: #08090c;
+            --card-bg: rgba(22, 24, 33, 0.75);
+            --card-hover: rgba(30, 33, 45, 0.9);
             --accent-kick: #53fc18;
             --accent-youtube: #ff0000;
             --accent-discord: #5865f2;
             --text-color: #ffffff;
-            --text-secondary: #9da4b4;
+            --text-secondary: #8d93a5;
         }
 
         * {
@@ -36,8 +36,32 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 50px 20px;
-            background: radial-gradient(circle at top, #181a24 0%, #0b0c10 100%);
+            padding: 30px 20px;
+            position: relative;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at top, #141722 0%, #08090c 100%);
+            background-size: 40px 40px, 100% 100%;
+        }
+
+        /* Watermark Text Background */
+        .bg-watermark {
+            position: absolute;
+            top: 260px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(4rem, 15vw, 11rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            letter-spacing: 12px;
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+            text-transform: uppercase;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
         }
 
         .container {
@@ -46,7 +70,37 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 22px;
+            gap: 20px;
+            z-index: 1;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 5px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         /* Profile Section */
@@ -55,17 +109,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .avatar-wrapper {
-            position: relative;
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            padding: 4px;
-            background: linear-gradient(135deg, var(--accent-kick), var(--accent-discord));
-            box-shadow: 0 0 25px rgba(83, 252, 24, 0.25);
+            padding: 3px;
+            background: linear-gradient(135deg, var(--accent-kick), #1f2230);
+            box-shadow: 0 0 30px rgba(83, 252, 24, 0.2);
+            margin-bottom: 5px;
         }
 
         .avatar-wrapper img {
@@ -78,55 +132,58 @@
         }
 
         .username {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
             color: var(--text-color);
-            text-transform: lowercase;
+            text-transform: uppercase;
+        }
+
+        .sub-title {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .bio {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
-            font-weight: 400;
+            margin-top: 2px;
         }
 
-        .live-badge {
+        .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background-color: rgba(83, 252, 24, 0.08);
-            color: var(--accent-kick);
-            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+            padding: 5px 16px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border: 1px solid rgba(83, 252, 24, 0.3);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             margin-top: 4px;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background-color: var(--accent-kick);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-kick);
-            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 8px var(--accent-kick);
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(1.25); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        /* Link Buttons */
+        /* Links Section */
         .links-list {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-top: 10px;
+            gap: 14px;
+            margin-top: 15px;
         }
 
         .link-card {
@@ -134,13 +191,14 @@
             align-items: center;
             justify-content: space-between;
             background-color: var(--card-bg);
-            padding: 18px 22px;
-            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            border-radius: 18px;
             text-decoration: none;
             color: var(--text-color);
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-weight: 700;
+            font-size: 1.05rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -150,108 +208,140 @@
             gap: 16px;
         }
 
-        .link-card i.brand-icon {
-            font-size: 1.5rem;
-            width: 28px;
-            text-align: center;
+        .icon-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        .link-card .arrow {
-            font-size: 0.9rem;
+        .link-card .external-icon {
+            font-size: 0.85rem;
             color: var(--text-secondary);
             transition: transform 0.3s ease, color 0.3s ease;
         }
 
-        /* Hover Effects */
+        /* Hover Styles per platform */
         .link-card:hover {
             transform: translateY(-3px);
             background-color: var(--card-hover);
         }
 
-        .link-card:hover .arrow {
-            transform: translateX(5px);
+        .link-card:hover .external-icon {
             color: var(--text-color);
+            transform: translate(2px, -2px);
         }
 
-        /* Kick Button */
+        /* Kick */
         .link-card.kick:hover {
-            border-color: var(--accent-kick);
-            box-shadow: 0 6px 20px rgba(83, 252, 24, 0.2);
+            border-color: rgba(83, 252, 24, 0.4);
+            box-shadow: 0 8px 25px rgba(83, 252, 24, 0.15);
         }
-        .link-card.kick i.brand-icon { color: var(--accent-kick); }
+        .link-card.kick .icon-box {
+            color: var(--accent-kick);
+            background: rgba(83, 252, 24, 0.1);
+        }
 
-        /* YouTube Button */
+        /* YouTube */
         .link-card.youtube:hover {
-            border-color: var(--accent-youtube);
-            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.15);
         }
-        .link-card.youtube i.brand-icon { color: var(--accent-youtube); }
+        .link-card.youtube .icon-box {
+            color: var(--accent-youtube);
+            background: rgba(255, 0, 0, 0.1);
+        }
 
-        /* Discord Button */
+        /* Discord */
         .link-card.discord:hover {
-            border-color: var(--accent-discord);
-            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.2);
+            border-color: rgba(88, 101, 242, 0.4);
+            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.15);
         }
-        .link-card.discord i.brand-icon { color: var(--accent-discord); }
+        .link-card.discord .icon-box {
+            color: var(--accent-discord);
+            background: rgba(88, 101, 242, 0.1);
+        }
 
         footer {
-            margin-top: 30px;
-            font-size: 0.85rem;
+            margin-top: 25px;
+            font-size: 0.8rem;
             color: var(--text-secondary);
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
+    <!-- Watermark Background -->
+    <div class="bg-watermark">DEVIDTUR</div>
+
     <div class="container">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <a href="#" class="nav-item active">LINKS</a>
+            <a href="#" class="nav-item">SCHEDULE</a>
+            <a href="#" class="nav-item">CLIPS</a>
+        </div>
+
         <!-- Profile -->
         <div class="profile">
             <div class="avatar-wrapper">
-                <!-- הסמל הרשמי של devidtur מיוטיוב -->
-                <img src="https://yt3.googleusercontent.com/ytc/AIdro_k6P6K0y9S-g5y7eY4H60qJ5qH4e1w0d7U=s800-c-k-c0x00ffffff-no-rj" alt="devidtur profile">
+                <img src="https://files.kick.com/images/user/3901323/profile_image/conversion/88de265e-9f7a-4ffa-884c-bfa702331367-fullsize.webp" alt="devidtur profile">
             </div>
-            <h1 class="username">devidtur</h1>
-            <p class="bio">Content Creator & Streamer 🎮</p>            
-            <div class="live-badge">
+            <h1 class="username">DEVIDTUR</h1>
+            <div class="sub-title">OFFICIAL LINKS</div>
+            <p class="bio">Official Links & Community 🎮</p>
+            
+            <div class="status-badge">
                 <span class="dot"></span>
-                <span>Official Channels & Links</span>
+                <span>ONLINE</span>
             </div>
         </div>
 
-        <!-- Links -->
+        <!-- Links List -->
         <div class="links-list">
             
             <!-- Kick -->
             <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
                 <div class="link-content">
-                    <i class="fa-solid fa-bolt brand-icon"></i>
-                    <span>Kick Channel</span>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <span>Kick</span>
                 </div>
-                <i class="fa-solid fa-chevron-right arrow"></i>
+                <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
             </a>
 
             <!-- YouTube -->
             <a href="https://www.youtube.com/@devidtur" target="_blank" class="link-card youtube">
                 <div class="link-content">
-                    <i class="fa-brands fa-youtube brand-icon"></i>
-                    <span>YouTube Channel</span>
+                    <div class="icon-box">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <span>YouTube</span>
                 </div>
-                <i class="fa-solid fa-chevron-right arrow"></i>
+                <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
             </a>
 
             <!-- Discord -->
             <a href="https://discord.gg/dFRSaAVqeQ" target="_blank" class="link-card discord">
                 <div class="link-content">
-                    <i class="fa-brands fa-discord brand-icon"></i>
-                    <span>Discord Community</span>
+                    <div class="icon-box">
+                        <i class="fa-brands fa-discord"></i>
+                    </div>
+                    <span>Discord</span>
                 </div>
-                <i class="fa-solid fa-chevron-right arrow"></i>
+                <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
             </a>
 
         </div>
 
         <footer>
-            © devidtur | All Rights Reserved
+            © DEVIDTUR | ALL RIGHTS RESERVED
         </footer>
     </div>
 
