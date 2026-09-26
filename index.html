@@ -101,7 +101,7 @@
             }
         }
 
-        /* Intro Screen Overlay - Smooth & Safe */
+        /* Intro Screen Overlay - Ultra Smooth */
         #introScreen {
             position: fixed;
             top: 0;
@@ -115,7 +115,8 @@
             justify-content: center;
             z-index: 999;
             cursor: pointer;
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s ease;
+            will-change: opacity;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
         }
 
         #introScreen.hidden {
@@ -446,27 +447,28 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // 1. Intro Screen Handling (With Fallback Timer)
+        // 1. Ultra Smooth Intro Screen Handling
         const introScreen = document.getElementById('introScreen');
+        let isClosed = false;
         
         function closeIntro() {
-            if (introScreen && !introScreen.classList.contains('hidden')) {
-                introScreen.classList.add('hidden');
-            }
+            if (isClosed) return;
+            isClosed = true;
+            introScreen.classList.add('hidden');
         }
 
-        introScreen.addEventListener('click', closeIntro);
-        document.addEventListener('keydown', closeIntro);
+        window.addEventListener('pointerdown', closeIntro, { once: true });
+        window.addEventListener('keydown', closeIntro, { once: true });
 
-        // Fallback: auto close after 1.5s if not clicked
-        setTimeout(closeIntro, 1500);
+        // Safety timeout to ensure it always disappears smoothly
+        setTimeout(closeIntro, 1200);
 
         // 2. Mouse Glow Effect
         const cursorGlow = document.getElementById('cursorGlow');
         document.addEventListener('mousemove', (e) => {
             cursorGlow.style.left = e.clientX + 'px';
             cursorGlow.style.top = e.clientY + 'px';
-        });
+        }, { passive: true });
 
         // 3. Blue Animated Stars Background
         const canvas = document.getElementById('starsCanvas');
@@ -528,7 +530,7 @@
             const avatarWrapper = document.getElementById('avatarWrapper');
 
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000); // 3-second limit
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
 
             try {
                 const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent('https://kick.com/api/v2/channels/' + channelName)}`;
@@ -545,10 +547,9 @@
                     }
                 }
             } catch (error) {
-                // If error or timeout, keep default OFFLINE state
+                // Keep default OFFLINE state on error
             }
 
-            // Default fallback: OFFLINE
             statusBadge.classList.remove('online');
             statusText.innerText = 'OFFLINE';
             avatarWrapper.style.boxShadow = '0 0 30px rgba(0, 136, 255, 0.3)';
