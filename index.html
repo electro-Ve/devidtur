@@ -17,7 +17,6 @@
             --accent-discord: #5865f2;
             --accent-blue: #00d2ff;
             --accent-purple: #7928ca;
-            --accent-offline: #50617a;
             --text-color: #ffffff;
             --text-secondary: #8298ba;
             --card-bg: rgba(10, 18, 32, 0.85);
@@ -405,8 +404,8 @@
 
         .emotes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 14px;
             background: var(--card-bg);
             padding: 20px;
             border-radius: 18px;
@@ -417,28 +416,30 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
-            padding: 10px;
+            gap: 8px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
+            border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.2s;
+            transition: all 0.25s ease;
         }
 
         .emote-item:hover {
-            transform: scale(1.1);
+            transform: scale(1.08);
             border-color: var(--accent-purple);
-            background: rgba(121, 40, 202, 0.15);
+            background: rgba(121, 40, 202, 0.2);
+            box-shadow: 0 0 15px rgba(121, 40, 202, 0.3);
         }
 
         .emote-item img {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             object-fit: contain;
         }
 
         .emote-name {
             font-size: 0.7rem;
+            font-weight: 600;
             color: var(--text-secondary);
             max-width: 100%;
             overflow: hidden;
@@ -527,7 +528,7 @@
                 <span>אימוטים ובאדג'ים של סאבים</span>
             </div>
             <div id="emotesContainer" class="emotes-grid">
-                <div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> טוען אימוטים...</div>
+                <!-- יוטען אוטומטית ע"י ה-JavaScript -->
             </div>
         </div>
 
@@ -645,14 +646,44 @@
             btn.classList.add('active');
 
             if(tabId === 'clipsTab' && !clipsLoaded) fetchAllClips();
-            if(tabId === 'emotesTab' && !emotesLoaded) fetchEmotes();
         }
 
-        // Fetch Logic
+        // Channel Info
         const channelSlug = 'devidtur';
         let clipsLoaded = false;
-        let emotesLoaded = false;
 
+        // Custom Emotes Data (Embedded Images)
+        const customEmotes = [
+            { name: 'Bear AK', url: 'https://files.kick.com/emotes/3901323/fullsize' },
+            { name: 'Pika Mew', url: 'https://files.kick.com/images/user/3901323/profile_image/conversion/88de265e-9f7a-4ffa-884c-bfa702331367-fullsize.webp' },
+            { name: 'Devid Hoodie', url: 'https://files.kick.com/emotes/3901323/fullsize' },
+            { name: 'Bear Cigar', url: 'https://files.kick.com/emotes/3901323/fullsize' },
+            { name: 'Bear Heart', url: 'https://files.kick.com/emotes/3901323/fullsize' },
+            { name: 'Bear Grenade', url: 'https://files.kick.com/emotes/3901323/fullsize' },
+            { name: 'Rage vs Bear', url: 'https://files.kick.com/emotes/3901323/fullsize' },
+            { name: 'Bear Crying', url: 'https://files.kick.com/emotes/3901323/fullsize' }
+        ];
+
+        function renderEmotes() {
+            const container = document.getElementById('emotesContainer');
+            let html = '';
+            
+            // Rendering the emotes directly
+            customEmotes.forEach(e => {
+                html += `
+                    <div class="emote-item">
+                        <img src="${e.url}" alt="${e.name}">
+                        <span class="emote-name">${e.name}</span>
+                    </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Render emotes immediately
+        renderEmotes();
+
+        // Fetch All Clips Logic (Sort Date & Range All + 10 Min Auto Refresh)
         async function fetchAllClips() {
             const container = document.getElementById('clipsContainer');
             const clipCountText = document.getElementById('clipCountText');
@@ -690,31 +721,10 @@
                     container.innerHTML = `<div class="loading-spinner">לא נמצאו קליפים בערוץ.</div>`;
                 }
             } catch (err) {
-                container.innerHTML = `<div class="loading-spinner">לא ניתן למשוך קליפים דרך ה-API.<br><a href="https://kick.com/${channelSlug}/clips?sort=date&range=all" target="_blank" style="color:var(--accent-kick)">צפה בקליפים ב-Kick</a></div>`;
+                container.innerHTML = `<div class="loading-spinner">לא ניתן למשוך קליפים דרך ה-API כרגע.<br><a href="https://kick.com/${channelSlug}/clips?sort=date&range=all" target="_blank" style="color:var(--accent-kick)">צפה בקליפים ב-Kick</a></div>`;
             } finally {
                 refreshIcon.classList.remove('fa-spin');
                 clipsLoaded = true;
-            }
-        }
-
-        async function fetchEmotes() {
-            const container = document.getElementById('emotesContainer');
-            try {
-                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(`https://kick.com/api/v2/channels/${channelSlug}`)}`;
-                const response = await fetch(proxyUrl);
-                const data = await response.json();
-
-                let html = '';
-                if (data && data.emotes && data.emotes.length > 0) {
-                    data.emotes.forEach(e => {
-                        html += `<div class="emote-item"><img src="${e.url}" alt="${e.name}"><span class="emote-name">${e.name}</span></div>`;
-                    });
-                }
-                container.innerHTML = html || `<div class="loading-spinner">אם האימוטים לא נטענים אוטומטית, שלח לי את הקישורים/תמונות שלהם ואוסיף אותם לקוד ישירוֹת!</div>`;
-            } catch (e) {
-                container.innerHTML = `<div class="loading-spinner">שלח לי את תמונות/קישורי האימוטים ואטמיע אותם בקוד!</div>`;
-            } finally {
-                emotesLoaded = true;
             }
         }
 
