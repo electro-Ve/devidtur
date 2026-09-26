@@ -479,11 +479,11 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- התפריט העליון מסודר בדיוק כמו בתמונה שלך -->
+        <!-- התפריט העליון - הלינקים מסומנים כפעילים -->
         <div class="top-nav">
             <button class="nav-btn" onclick="switchTab('clipsTab', this)">CLIPS</button>
-            <button class="nav-btn active" onclick="switchTab('emotesTab', this)">EMOTES</button>
-            <button class="nav-btn" onclick="switchTab('linksTab', this)">LINKS</button>
+            <button class="nav-btn" onclick="switchTab('emotesTab', this)">EMOTES</button>
+            <button class="nav-btn active" onclick="switchTab('linksTab', this)">LINKS</button>
         </div>
 
         <div class="profile">
@@ -507,54 +507,54 @@
             </div>
         </div>
 
-        <!-- TAB 2: EMOTES (פעיל כברירת מחדל) -->
-        <div id="emotesTab" class="tab-content active">
+        <!-- TAB 2: EMOTES (מוסתר כברירת מחדל) -->
+        <div id="emotesTab" class="tab-content">
             <div class="section-header">
                 <span>אימוטים ובאדג'ים של סאבים</span>
             </div>
             <div class="emotes-grid">
                 
-                <!-- שורה עליונה לפי התמונה שלך -->
+                <!-- שורה עליונה עם הקבצים המקוריים -->
                 <div class="emote-item">
-                    <img src="YOUR_IMAGE_LINK_HERE_1.png" alt="Bear Cigar">
+                    <img src="כעיכעי_2.png" alt="Bear Cigar">
                     <span class="emote-name">Bear Cigar</span>
                 </div>
                 <div class="emote-item">
-                    <img src="YOUR_IMAGE_LINK_HERE_2.png" alt="Devid Hoodie">
+                    <img src="דגכגדע_2.png" alt="Devid Hoodie">
                     <span class="emote-name">Devid Hoodie</span>
                 </div>
                 <div class="emote-item">
-                    <img src="YOUR_IMAGE_LINK_HERE_3.png" alt="Pika Mew">
+                    <img src="עכיחיחחכ_2.png" alt="Pika Mew">
                     <span class="emote-name">Pika Mew</span>
                 </div>
                 <div class="emote-item">
-                    <img src="YOUR_IMAGE_LINK_HERE_4.png" alt="Bear AK">
+                    <img src="עכיעיכעיעכ_2.png" alt="Bear AK">
                     <span class="emote-name">Bear AK</span>
                 </div>
 
-                <!-- שורה תחתונה לפי התמונה שלך -->
+                <!-- שורה תחתונה עם הקבצים המקוריים -->
                 <div class="emote-item">
-                    <img src="YOUR_IMAGE_LINK_HERE_5.png" alt="Bear Crying">
+                    <img src="fullsize_2.png" alt="Bear Crying">
                     <span class="emote-name">Bear Crying</span>
                 </div>
                 <div class="emote-item">
-                    <img src="YOUR_IMAGE_LINK_HERE_6.png" alt="Rage vs Bear">
+                    <img src="שדג_2.png" alt="Rage vs Bear">
                     <span class="emote-name">Rage vs Bear</span>
                 </div>
                 <div class="emote-item">
-                    <img src="YOUR_IMAGE_LINK_HERE_7.png" alt="Bear Grenade">
+                    <img src="גכד_2.png" alt="Bear Grenade">
                     <span class="emote-name">Bear Grenade</span>
                 </div>
                 <div class="emote-item">
-                    <img src="YOUR_IMAGE_LINK_HERE_8.png" alt="Bear Heart">
+                    <img src="כעגגכע_2.png" alt="Bear Heart">
                     <span class="emote-name">Bear Heart</span>
                 </div>
 
             </div>
         </div>
 
-        <!-- TAB 3: LINKS (מוסתר כברירת מחדל) -->
-        <div id="linksTab" class="tab-content">
+        <!-- TAB 3: LINKS (פעיל כברירת מחדל) -->
+        <div id="linksTab" class="tab-content active">
             <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
                 <div class="link-content">
                     <span>Kick</span>
@@ -723,9 +723,6 @@
                 clipsLoaded = true;
             }
         }
-
-        // טעינת קליפים בפעם הראשונה רק אם המשתמש נכנס לטאב
-        // אבל אפשר גם לטעון אוטומטית ברקע אם רוצים
     </script>
 </body>
 </html>
