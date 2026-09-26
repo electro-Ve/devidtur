@@ -99,7 +99,7 @@
             z-index: 0;
         }
 
-        /* INTRO SCREEN - FIXED & RELIABLE */
+        /* INTRO SCREEN */
         #introScreen {
             position: fixed;
             inset: 0;
@@ -540,7 +540,7 @@
 
     <!-- Scripts -->
     <script>
-        // Intro Control - Robust & Fail-safe
+        // Intro Control
         function enterSite() {
             const intro = document.getElementById('introScreen');
             if (intro) {
@@ -549,7 +549,6 @@
             }
         }
 
-        // Mouse & Touch fallback listeners
         window.addEventListener('DOMContentLoaded', () => {
             const intro = document.getElementById('introScreen');
             if (intro) {
@@ -557,7 +556,7 @@
             }
         });
 
-        // Cursor Glow Animation
+        // Cursor Glow
         const cursorGlow = document.getElementById('cursorGlow');
         let mouseX = 0, mouseY = 0;
         let currentX = 0, currentY = 0;
@@ -578,7 +577,7 @@
         }
         animateCursor();
 
-        // Stars Canvas Effect
+        // Canvas Stars
         const canvas = document.getElementById('starsCanvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -630,7 +629,7 @@
         resizeCanvas();
         drawStars();
 
-        // Tab Switching
+        // Switch Tabs
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -644,16 +643,16 @@
         const channelSlug = 'devidtur';
         let clipsLoaded = false;
 
-        // 8 האימוטים
+        // SVG Data URIs for local fallback rendering of emotes directly in code
         const customEmotes = [
-            { name: 'Bear AK', url: 'emotes/1.png' },
-            { name: 'Pika Mew', url: 'emotes/2.png' },
-            { name: 'Devid Hoodie', url: 'emotes/3.png' },
-            { name: 'Bear Cigar', url: 'emotes/4.png' },
-            { name: 'Bear Heart', url: 'emotes/5.png' },
-            { name: 'Bear Grenade', url: 'emotes/6.png' },
-            { name: 'Rage vs Bear', url: 'emotes/7.png' },
-            { name: 'Bear Crying', url: 'emotes/8.png' }
+            { name: 'Bear Cigar', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%232b313e"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%2300d2ff" font-size="30">🐻</text><text x="50%" y="75%" dominant-baseline="middle" text-anchor="middle" fill="%23fff" font-size="16">🚬</text></svg>' },
+            { name: 'Devid Hoodie', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%237928ca"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="%23fff" font-size="35">🧥</text></svg>' },
+            { name: 'Pika Mew', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23f1c40f"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="%23000" font-size="35">⚡</text></svg>' },
+            { name: 'Bear AK', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%232b313e"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23fff" font-size="30">🐻</text><text x="50%" y="75%" dominant-baseline="middle" text-anchor="middle" fill="%2353fc18" font-size="16">💥</text></svg>' },
+            { name: 'Bear Crying', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%232b313e"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23fff" font-size="30">🐻</text><text x="50%" y="75%" dominant-baseline="middle" text-anchor="middle" fill="%2300d2ff" font-size="16">😭</text></svg>' },
+            { name: 'Rage vs Bear', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="00 100 100"><circle cx="50" cy="50" r="45" fill="%23e74c3c"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="%23fff" font-size="35">🔥</text></svg>' },
+            { name: 'Bear Grenade', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%232b313e"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23fff" font-size="30">🐻</text><text x="50%" y="75%" dominant-baseline="middle" text-anchor="middle" font-size="16">💣</text></svg>' },
+            { name: 'Bear Heart', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%232b313e"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23fff" font-size="30">🐻</text><text x="50%" y="75%" dominant-baseline="middle" text-anchor="middle" fill="%23ff0000" font-size="16">❤️</text></svg>' }
         ];
 
         function renderEmotes() {
@@ -664,7 +663,7 @@
             customEmotes.forEach(e => {
                 html += `
                     <div class="emote-item">
-                        <img src="${e.url}" alt="${e.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/70?text=Emote';">
+                        <img src="${e.url}" alt="${e.name}">
                         <span class="emote-name">${e.name}</span>
                     </div>`;
             });
@@ -674,7 +673,7 @@
 
         renderEmotes();
 
-        // Fetch All Clips
+        // Clips Fetching
         async function fetchAllClips() {
             const container = document.getElementById('clipsContainer');
             const clipCountText = document.getElementById('clipCountText');
