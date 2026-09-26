@@ -44,13 +44,11 @@
             background: radial-gradient(circle at top, #09152a 0%, #03060d 100%);
         }
 
-        /* INTRO SCREEN (OVERLAY) */
+        /* INTRO SCREEN - OPTIMIZED FOR 60FPS (NO LAGS) */
         #introScreen {
             position: fixed;
             inset: 0;
-            background: rgba(3, 6, 13, 0.98);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: #03060d;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,9 +56,9 @@
             z-index: 99999;
             cursor: pointer;
             user-select: none;
-            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
-                        visibility 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateZ(0);
             will-change: opacity, transform;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
 
         .intro-content {
@@ -68,9 +66,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateZ(0);
             will-change: transform, opacity;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
         }
 
         .intro-avatar-wrapper {
@@ -79,8 +77,8 @@
             border-radius: 50%;
             padding: 4px;
             background: linear-gradient(135deg, var(--accent-blue-glow), #0088ff);
-            box-shadow: 0 0 45px rgba(0, 136, 255, 0.4);
-            animation: introPulse 2.2s ease-in-out infinite alternate;
+            box-shadow: 0 0 35px rgba(0, 136, 255, 0.4);
+            animation: introPulse 2s ease-in-out infinite alternate;
         }
 
         .intro-avatar-wrapper img {
@@ -103,12 +101,12 @@
         }
 
         @keyframes introPulse {
-            0% { transform: scale(0.96); box-shadow: 0 0 20px rgba(0, 136, 255, 0.2); }
-            100% { transform: scale(1.04); box-shadow: 0 0 55px rgba(0, 210, 255, 0.55); }
+            0% { transform: scale(0.97); box-shadow: 0 0 20px rgba(0, 136, 255, 0.2); }
+            100% { transform: scale(1.03); box-shadow: 0 0 45px rgba(0, 210, 255, 0.5); }
         }
 
         @keyframes blinkText {
-            0%, 100% { opacity: 0.35; }
+            0%, 100% { opacity: 0.4; }
             50% { opacity: 1; }
         }
 
@@ -120,11 +118,11 @@
         }
 
         #introScreen.fade-out .intro-content {
-            transform: scale(1.35);
+            transform: scale(1.2);
             opacity: 0;
         }
 
-        /* MAIN CONTAINER (POP OUT EFFECT) */
+        /* MAIN CONTAINER (SYNCHRONIZED POP-OUT) */
         .container {
             width: 100%;
             max-width: 480px;
@@ -134,21 +132,18 @@
             gap: 20px;
             z-index: 1;
             
-            /* Initial State Before Click (Small & Hidden) */
+            /* Initial Hidden State */
             opacity: 0;
-            transform: scale(0.85) translateY(30px);
-            filter: blur(10px);
-            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform, opacity, filter;
+            transform: scale(0.9) translateY(20px);
+            will-change: transform, opacity;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Active State After Click (Pop-Out to Screen) */
+        /* Active State After Click */
         body.site-active .container {
             opacity: 1;
             transform: scale(1) translateY(0);
-            filter: blur(0px);
         }
 
         /* Cursor Glow Effect */
@@ -208,7 +203,6 @@
             border-radius: 30px;
             border: 1px solid rgba(0, 136, 255, 0.15);
             margin-bottom: 10px;
-            backdrop-filter: blur(10px);
         }
 
         .nav-item {
@@ -327,13 +321,12 @@
             align-items: center;
             justify-content: center;
             background-color: rgba(12, 20, 36, 0.85);
-            backdrop-filter: blur(12px);
             padding: 20px;
             border-radius: 20px;
             text-decoration: none;
             font-weight: 800;
             font-size: 1.3rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
         }
 
         .link-content {
@@ -343,17 +336,6 @@
         }
 
         /* Card Styles */
-        .link-card.youtube {
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            color: #ff3b3b;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.15);
-        }
-        .link-card.youtube:hover {
-            border-color: rgba(255, 0, 0, 0.9);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.35);
-            transform: translateY(-3px);
-        }
-
         .link-card.kick {
             border: 1px solid rgba(83, 252, 24, 0.5);
             color: #53fc18;
@@ -362,6 +344,17 @@
         .link-card.kick:hover {
             border-color: rgba(83, 252, 24, 0.9);
             box-shadow: 0 0 30px rgba(83, 252, 24, 0.35);
+            transform: translateY(-3px);
+        }
+
+        .link-card.youtube {
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            color: #ff3b3b;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.15);
+        }
+        .link-card.youtube:hover {
+            border-color: rgba(255, 0, 0, 0.9);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.35);
             transform: translateY(-3px);
         }
 
@@ -458,16 +451,15 @@
             if (isOpened) return;
             isOpened = true;
 
-            // Trigger Pop-Out for the main container
+            // Trigger Pop-Out simultaneously
             document.body.classList.add('site-active');
             introScreen.classList.add('fade-out');
 
             setTimeout(() => {
                 introScreen.style.display = 'none';
-            }, 750);
+            }, 500);
         }
 
-        // Global Event Listeners for seamless response
         introScreen.addEventListener('click', handleEnter);
         introScreen.addEventListener('touchstart', handleEnter, { passive: true });
 
@@ -503,7 +495,7 @@
 
         function initStars() {
             stars = [];
-            const count = Math.floor((canvas.width * canvas.height) / 9000);
+            const count = Math.floor((canvas.width * canvas.height) / 10000);
             for (let i = 0; i < count; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
