@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devidtur | Links</title>
+    <!-- Google Fonts - Rubik -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: #15171e;
+            --card-hover: #1e212b;
+            --accent-kick: #53fc18;
+            --accent-youtube: #ff0000;
+            --accent-discord: #5865f2;
+            --text-color: #ffffff;
+            --text-secondary: #9da4b4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 50px 20px;
+            background: radial-gradient(circle at top, #181a24 0%, #0b0c10 100%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+        }
+
+        /* Profile Section */
+        .profile {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--accent-kick), var(--accent-discord));
+            box-shadow: 0 0 25px rgba(83, 252, 24, 0.25);
+        }
+
+        .avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--card-bg);
+            display: block;
+        }
+
+        .username {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--text-color);
+            text-transform: lowercase;
+        }
+
+        .bio {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(83, 252, 24, 0.08);
+            color: var(--accent-kick);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(83, 252, 24, 0.3);
+            margin-top: 4px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-kick);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-kick);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.25); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Link Buttons */
+        .links-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--card-bg);
+            padding: 18px 22px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .link-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .link-card i.brand-icon {
+            font-size: 1.5rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .link-card .arrow {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        /* Hover Effects */
+        .link-card:hover {
+            transform: translateY(-3px);
+            background-color: var(--card-hover);
+        }
+
+        .link-card:hover .arrow {
+            transform: translateX(5px);
+            color: var(--text-color);
+        }
+
+        /* Kick Button */
+        .link-card.kick:hover {
+            border-color: var(--accent-kick);
+            box-shadow: 0 6px 20px rgba(83, 252, 24, 0.2);
+        }
+        .link-card.kick i.brand-icon { color: var(--accent-kick); }
+
+        /* YouTube Button */
+        .link-card.youtube:hover {
+            border-color: var(--accent-youtube);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.2);
+        }
+        .link-card.youtube i.brand-icon { color: var(--accent-youtube); }
+
+        /* Discord Button */
+        .link-card.discord:hover {
+            border-color: var(--accent-discord);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.2);
+        }
+        .link-card.discord i.brand-icon { color: var(--accent-discord); }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Profile -->
+        <div class="profile">
+            <div class="avatar-wrapper">
+                <!-- הסמל הרשמי של devidtur מיוטיוב -->
+                <img src="https://yt3.googleusercontent.com/ytc/AIdro_k6P6K0y9S-g5y7eY4H60qJ5qH4e1w0d7U=s800-c-k-c0x00ffffff-no-rj" alt="devidtur profile">
+            </div>
+            <h1 class="username">devidtur</h1>
+            <p class="bio">Content Creator & Streamer 🎮</p>            
+            <div class="live-badge">
+                <span class="dot"></span>
+                <span>Official Channels & Links</span>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="links-list">
+            
+            <!-- Kick -->
+            <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
+                <div class="link-content">
+                    <i class="fa-solid fa-bolt brand-icon"></i>
+                    <span>Kick Channel</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow"></i>
+            </a>
+
+            <!-- YouTube -->
+            <a href="https://www.youtube.com/@devidtur" target="_blank" class="link-card youtube">
+                <div class="link-content">
+                    <i class="fa-brands fa-youtube brand-icon"></i>
+                    <span>YouTube Channel</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow"></i>
+            </a>
+
+            <!-- Discord -->
+            <a href="https://discord.gg/dFRSaAVqeQ" target="_blank" class="link-card discord">
+                <div class="link-content">
+                    <i class="fa-brands fa-discord brand-icon"></i>
+                    <span>Discord Community</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow"></i>
+            </a>
+
+        </div>
+
+        <footer>
+            © devidtur | All Rights Reserved
+        </footer>
+    </div>
+
+</body>
+</html>
