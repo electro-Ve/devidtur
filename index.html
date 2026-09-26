@@ -202,7 +202,7 @@
             z-index: 1;
         }
 
-        /* TOP NAV BAR - סדר: קליפים מימין, אימוטים באמצע, לינקים משמאל */
+        /* TOP NAV BAR - סדר: קליפס מימין, לינקים באמצע, אימוטס משמאל */
         .top-nav {
             display: flex;
             gap: 8px;
@@ -407,11 +407,11 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- התפריט העליון: קליפס (מימין), אימוטס (באמצע), לינקים (משמאל) -->
+        <!-- התפריט העליון: CLIPS מימין, LINKS באמצע, EMOTES משמאל -->
         <div class="top-nav">
-            <button class="nav-btn active" onclick="switchTab('clipsTab', this)">CLIPS</button>
+            <button class="nav-btn" onclick="switchTab('clipsTab', this)">CLIPS</button>
+            <button class="nav-btn active" onclick="switchTab('linksTab', this)">LINKS</button>
             <button class="nav-btn" onclick="switchTab('emotesTab', this)">EMOTES</button>
-            <button class="nav-btn" onclick="switchTab('linksTab', this)">LINKS</button>
         </div>
 
         <div class="profile">
@@ -421,8 +421,8 @@
             <h1 class="username">DEVIDTUR</h1>
         </div>
 
-        <!-- TAB 1: CLIPS (קישור ישיר ומהיר מכל הזמנים) -->
-        <div id="clipsTab" class="tab-content active">
+        <!-- TAB 1: CLIPS -->
+        <div id="clipsTab" class="tab-content">
             <a href="https://kick.com/devidtur/clips?sort=date&range=all" target="_blank" class="link-card kick">
                 <div class="link-content">
                     <span>צפה בכל הקליפים ב-Kick</span>
@@ -431,7 +431,29 @@
             </a>
         </div>
 
-        <!-- TAB 2: EMOTES -->
+        <!-- TAB 2: LINKS (נפתח כברירת מחדל) -->
+        <div id="linksTab" class="tab-content active">
+            <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
+                <div class="link-content">
+                    <span>Kick</span>
+                    <i class="fa-solid fa-play"></i>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/@devidtur" target="_blank" class="link-card youtube">
+                <div class="link-content">
+                    <span>YouTube</span>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </a>
+            <a href="https://discord.gg/dFRSaAVqeQ" target="_blank" class="link-card discord">
+                <div class="link-content">
+                    <span>Discord</span>
+                    <i class="fa-brands fa-discord"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- TAB 3: EMOTES -->
         <div id="emotesTab" class="tab-content">
             <div class="section-header">
                 <span>אימוטים ובאדג'ים של סאבים</span>
@@ -470,28 +492,6 @@
                     <span class="emote-name">Bear Crying</span>
                 </div>
             </div>
-        </div>
-
-        <!-- TAB 3: LINKS -->
-        <div id="linksTab" class="tab-content">
-            <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
-                <div class="link-content">
-                    <span>Kick</span>
-                    <i class="fa-solid fa-play"></i>
-                </div>
-            </a>
-            <a href="https://www.youtube.com/@devidtur" target="_blank" class="link-card youtube">
-                <div class="link-content">
-                    <span>YouTube</span>
-                    <i class="fa-brands fa-youtube"></i>
-                </div>
-            </a>
-            <a href="https://discord.gg/dFRSaAVqeQ" target="_blank" class="link-card discord">
-                <div class="link-content">
-                    <span>Discord</span>
-                    <i class="fa-brands fa-discord"></i>
-                </div>
-            </a>
         </div>
 
         <footer>© DEVIDTUR | ALL RIGHTS RESERVED</footer>
