@@ -15,6 +15,7 @@
             --card-bg: rgba(22, 24, 33, 0.75);
             --card-hover: rgba(30, 33, 45, 0.9);
             --accent-kick: #53fc18;
+            --accent-offline: #727a8e;
             --accent-youtube: #ff0000;
             --accent-discord: #5865f2;
             --text-color: #ffffff;
@@ -115,6 +116,7 @@
             background: linear-gradient(135deg, var(--accent-kick), #1f2230);
             box-shadow: 0 0 30px rgba(83, 252, 24, 0.2);
             margin-bottom: 5px;
+            transition: all 0.3s ease;
         }
 
         .avatar-wrapper img {
@@ -149,6 +151,7 @@
             margin-top: 2px;
         }
 
+        /* Status Badge */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -162,14 +165,34 @@
             letter-spacing: 1px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             margin-top: 4px;
+            transition: all 0.3s ease;
         }
 
         .dot {
             width: 7px;
             height: 7px;
-            background-color: var(--accent-kick);
             border-radius: 50%;
+            background-color: var(--accent-offline);
+            transition: all 0.3s ease;
+        }
+
+        /* Online state */
+        .status-badge.online {
+            border-color: rgba(83, 252, 24, 0.3);
+            color: #ffffff;
+            background: rgba(83, 252, 24, 0.08);
+        }
+
+        .status-badge.online .dot {
+            background-color: var(--accent-kick);
             box-shadow: 0 0 8px var(--accent-kick);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         /* Links Section */
@@ -220,7 +243,6 @@
             transition: transform 0.3s ease, color 0.3s ease;
         }
 
-        /* Hover Styles per platform */
         .link-card:hover {
             transform: translateY(-3px);
             background-color: var(--card-hover);
@@ -282,16 +304,16 @@
 
         <!-- Profile -->
         <div class="profile">
-            <div class="avatar-wrapper">
+            <div class="avatar-wrapper" id="avatarWrapper">
                 <img src="https://files.kick.com/images/user/3901323/profile_image/conversion/88de265e-9f7a-4ffa-884c-bfa702331367-fullsize.webp" alt="devidtur profile">
             </div>
             <h1 class="username">DEVIDTUR</h1>
             <div class="sub-title">OFFICIAL LINKS</div>
             <p class="bio">Official Links & Community 🎮</p>
             
-            <div class="status-badge">
+            <div class="status-badge" id="statusBadge">
                 <span class="dot"></span>
-                <span>ONLINE</span>
+                <span id="statusText">CHECKING...</span>
             </div>
         </div>
 
@@ -338,5 +360,49 @@
         </footer>
     </div>
 
+    <!-- Kick Live Status Script -->
+    <script>
+        async function checkKickLiveStatus() {
+            const channelName = 'devidtur';
+            const statusBadge = id('statusBadge');
+            const statusText = id('statusText');
+            const avatarWrapper = id('avatarWrapper');
+
+            function id(name) { return document.getElementById(name); }
+
+            try {
+                // שימוש בשרת Proxy ציבורי כדי לעקוף הגבלות CORS
+                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://kick.com/api/v2/channels/' + channelName)}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const channelData = JSON.parse(data.contents);
+
+                    if (channelData && channelData.livestream !== null) {
+                        // הסטרימר בלייב כרגע
+                        statusBadge.classList.add('online');
+                        statusText.innerText = 'ONLINE';
+                        avatarWrapper.style.boxShadow = '0 0 35px rgba(83, 252, 24, 0.5)';
+                    } else {
+                        // הסטרימר אופליין
+                        statusBadge.classList.remove('online');
+                        statusText.innerText = 'OFFLINE';
+                        avatarWrapper.style.boxShadow = 'none';
+                    }
+                } else {
+                    statusText.innerText = 'OFFLINE';
+                }
+            } catch (error) {
+                console.log('Error fetching Kick status:', error);
+                statusText.innerText = 'OFFLINE';
+            }
+        }
+
+        // בדיקה בעת טעינת הדף
+        checkKickLiveStatus();
+
+        // בדיקה חוזרת כל 60 שניות
+        setInterval(checkKickLiveStatus, 60000);
+    </script>
 </body>
 </html>
