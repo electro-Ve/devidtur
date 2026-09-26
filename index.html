@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>devidtur | All Clips</title>
+    <title>devidtur | Links & Clips</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
@@ -13,8 +13,11 @@
         :root {
             --bg-dark: #020408;
             --accent-kick: #53fc18;
+            --accent-youtube: #ff0000;
+            --accent-discord: #5865f2;
             --accent-blue: #00d2ff;
             --accent-purple: #7928ca;
+            --accent-offline: #50617a;
             --text-color: #ffffff;
             --text-secondary: #8298ba;
             --card-bg: rgba(10, 18, 32, 0.85);
@@ -25,6 +28,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Rubik', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -34,6 +38,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
             padding: 30px 20px;
             position: relative;
             overflow-x: hidden;
@@ -49,6 +54,7 @@
             inset: 0;
             pointer-events: none;
             z-index: 0;
+            overflow: hidden;
             opacity: 0.6;
         }
 
@@ -62,32 +68,281 @@
             transform: rotate(-12deg);
         }
 
-        .line-1 { top: 8%; }
-        .line-2 { top: 16%; opacity: 0.5; }
-        .line-3 { top: 25%; opacity: 0.3; }
+        .line-1 { top: 8%; animation: waveMove 10s ease-in-out infinite alternate; }
+        .line-2 { top: 16%; opacity: 0.5; animation: waveMove 14s ease-in-out infinite alternate-reverse; }
+        .line-3 { top: 25%; opacity: 0.3; animation: waveMove 18s ease-in-out infinite alternate; }
 
+        @keyframes waveMove {
+            0% { transform: rotate(-14deg) translateY(-10px); }
+            100% { transform: rotate(-10deg) translateY(10px); }
+        }
+
+        /* CURSOR GLOW */
+        #cursorGlow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.12) 0%, rgba(121, 40, 202, 0.06) 50%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            will-change: left, top;
+        }
+
+        /* STARS CANVAS */
+        #starsCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* INTRO SCREEN */
+        #introScreen {
+            position: fixed;
+            inset: 0;
+            background: #020408;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            cursor: pointer;
+            user-select: none;
+            transform: translateZ(0);
+            will-change: opacity, transform;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+        .intro-avatar-wrapper {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.4);
+            animation: introPulse 2s ease-in-out infinite alternate;
+        }
+
+        .intro-avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .intro-text {
+            margin-top: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: var(--text-color);
+            text-transform: uppercase;
+            animation: blinkText 1.8s ease-in-out infinite;
+        }
+
+        @keyframes introPulse {
+            0% { transform: scale(0.97); box-shadow: 0 0 20px rgba(0, 210, 255, 0.2); }
+            100% { transform: scale(1.03); box-shadow: 0 0 50px rgba(121, 40, 202, 0.6); }
+        }
+
+        @keyframes blinkText {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        #introScreen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #introScreen.fade-out .intro-content {
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        /* WATERMARK BACKGROUND */
+        .bg-watermark {
+            position: absolute;
+            top: 280px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(3.5rem, 13vw, 10rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.02);
+            letter-spacing: 10px;
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+            text-transform: uppercase;
+            -webkit-text-stroke: 1px rgba(0, 210, 255, 0.08);
+            animation: watermarkPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes watermarkPulse {
+            0% { transform: translate(-50%, -50%) scale(0.98); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.04); opacity: 1; }
+        }
+
+        /* MAIN CONTAINER */
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 520px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
             z-index: 1;
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            will-change: transform, opacity;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .section-header {
+        body.site-active .container {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* TOP NAV BAR */
+        .top-nav {
+            display: flex;
+            gap: 8px;
+            background: rgba(10, 18, 36, 0.6);
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 210, 255, 0.18);
+            margin-bottom: 10px;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.25s ease;
+        }
+
+        .nav-btn.active, .nav-btn:hover {
+            color: var(--text-color);
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.25), rgba(121, 40, 202, 0.25));
+            border: 1px solid rgba(0, 210, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        /* PROFILE HEADER */
+        .profile {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .avatar-wrapper {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+        }
+
+        .avatar-wrapper img {
             width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .username {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* TAB SECTIONS */
+        .tab-content {
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* LINKS */
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(12, 20, 36, 0.9), rgba(5, 10, 20, 0.9));
+            padding: 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.3rem;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .link-card.kick { border: 1px solid rgba(83, 252, 24, 0.5); color: #53fc18; box-shadow: 0 0 20px rgba(83, 252, 24, 0.12); }
+        .link-card.kick:hover { border-color: rgba(83, 252, 24, 0.9); box-shadow: 0 0 30px rgba(83, 252, 24, 0.35); transform: translateY(-3px); }
+
+        .link-card.youtube { border: 1px solid rgba(255, 0, 0, 0.5); color: #ff3b3b; box-shadow: 0 0 20px rgba(255, 0, 0, 0.12); }
+        .link-card.youtube:hover { border-color: rgba(255, 0, 0, 0.9); box-shadow: 0 0 30px rgba(255, 0, 0, 0.35); transform: translateY(-3px); }
+
+        .link-card.discord { border: 1px solid rgba(88, 101, 242, 0.5); color: #7289da; box-shadow: 0 0 20px rgba(88, 101, 242, 0.12); }
+        .link-card.discord:hover { border-color: rgba(88, 101, 242, 0.9); box-shadow: 0 0 30px rgba(88, 101, 242, 0.35); transform: translateY(-3px); }
+
+        .link-content { display: flex; align-items: center; gap: 12px; }
+
+        /* CLIPS & EMOTES */
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             padding: 0 5px;
         }
 
         .refresh-status {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--accent-blue);
             display: flex;
             align-items: center;
@@ -96,8 +351,8 @@
 
         .clips-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
             width: 100%;
         }
 
@@ -148,140 +403,325 @@
             color: var(--text-secondary);
         }
 
+        .emotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 12px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 18px;
+            border: 1px solid rgba(121, 40, 202, 0.3);
+        }
+
+        .emote-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .emote-item:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-purple);
+            background: rgba(121, 40, 202, 0.15);
+        }
+
+        .emote-item img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .emote-name {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         .loading-spinner {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 0.9rem;
             grid-column: 1 / -1;
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
+    <!-- Intro Screen -->
+    <div id="introScreen">
+        <div class="intro-content">
+            <div class="intro-avatar-wrapper">
+                <img src="https://files.kick.com/images/user/3901323/profile_image/conversion/88de265e-9f7a-4ffa-884c-bfa702331367-fullsize.webp" alt="DEVIDTUR Profile">
+            </div>
+            <div class="intro-text">CLICK TO ENTER</div>
+        </div>
+    </div>
+
+    <!-- Background Elements -->
     <div class="bg-lines-container">
         <div class="cyber-line line-1"></div>
         <div class="cyber-line line-2"></div>
         <div class="cyber-line line-3"></div>
     </div>
+    <div id="cursorGlow"></div>
+    <canvas id="starsCanvas"></canvas>
+    <div class="bg-watermark">DEVIDTUR</div>
 
+    <!-- Main Container -->
     <div class="container">
-        <div class="section-header">
-            <span id="clipCount">טוען קליפים...</span>
-            <div class="refresh-status">
-                <i class="fa-solid fa-rotate fa-spin" id="clipRefreshIcon"></i>
-                <span>מתעדכן כל 10 דקות</span>
+        <div class="top-nav">
+            <button class="nav-btn active" onclick="switchTab('linksTab', this)">LINKS</button>
+            <button class="nav-btn" onclick="switchTab('emotesTab', this)">EMOTES</button>
+            <button class="nav-btn" onclick="switchTab('clipsTab', this)">CLIPS</button>
+        </div>
+
+        <div class="profile">
+            <div class="avatar-wrapper">
+                <img src="https://files.kick.com/images/user/3901323/profile_image/conversion/88de265e-9f7a-4ffa-884c-bfa702331367-fullsize.webp" alt="devidtur profile">
+            </div>
+            <h1 class="username">DEVIDTUR</h1>
+        </div>
+
+        <!-- TAB 1: LINKS -->
+        <div id="linksTab" class="tab-content active">
+            <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
+                <div class="link-content">
+                    <span>Kick</span>
+                    <i class="fa-solid fa-play"></i>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/@devidtur" target="_blank" class="link-card youtube">
+                <div class="link-content">
+                    <span>YouTube</span>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </a>
+            <a href="https://discord.gg/dFRSaAVqeQ" target="_blank" class="link-card discord">
+                <div class="link-content">
+                    <span>Discord</span>
+                    <i class="fa-brands fa-discord"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- TAB 2: EMOTES -->
+        <div id="emotesTab" class="tab-content">
+            <div class="section-header">
+                <span>אימוטים ובאדג'ים של סאבים</span>
+            </div>
+            <div id="emotesContainer" class="emotes-grid">
+                <div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> טוען אימוטים...</div>
             </div>
         </div>
 
-        <div id="clipsContainer" class="clips-grid">
-            <div class="loading-spinner">
-                <i class="fa-solid fa-spinner fa-spin"></i> טוען את כל הקליפים מ-Kick...
+        <!-- TAB 3: CLIPS -->
+        <div id="clipsTab" class="tab-content">
+            <div class="section-header">
+                <span id="clipCountText">קליפים מכל הזמנים</span>
+                <div class="refresh-status">
+                    <i class="fa-solid fa-rotate fa-spin" id="clipRefreshIcon"></i>
+                    <span>מתעדכן כל 10 דקות</span>
+                </div>
+            </div>
+            <div id="clipsContainer" class="clips-grid">
+                <div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> טוען קליפים...</div>
             </div>
         </div>
+
+        <footer>© DEVIDTUR | ALL RIGHTS RESERVED</footer>
     </div>
 
+    <!-- Scripts -->
     <script>
+        // Intro Control
+        const introScreen = document.getElementById('introScreen');
+        let isOpened = false;
+
+        function handleEnter() {
+            if (isOpened) return;
+            isOpened = true;
+            document.body.classList.add('site-active');
+            introScreen.classList.add('fade-out');
+            setTimeout(() => { introScreen.style.display = 'none'; }, 500);
+        }
+
+        introScreen.addEventListener('click', handleEnter);
+        introScreen.addEventListener('touchstart', handleEnter, { passive: true });
+
+        // Cursor Glow Animation
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        }, { passive: true });
+
+        function animateCursor() {
+            currentX += (mouseX - currentX) * 0.15;
+            currentY += (mouseY - currentY) * 0.15;
+            cursorGlow.style.left = currentX + 'px';
+            cursorGlow.style.top = currentY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Stars Canvas Effect
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const count = Math.floor((canvas.width * canvas.height) / 10000);
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.012 + 0.005,
+                    dy: Math.random() * 0.2 + 0.05,
+                    color: Math.random() > 0.4 ? 'rgba(0, 210, 255, ' : 'rgba(255, 255, 255, '
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = star.color + star.alpha + ')';
+                ctx.fill();
+
+                star.alpha += star.speed;
+                if (star.alpha >= 0.9 || star.alpha <= 0.1) {
+                    star.speed = -star.speed;
+                }
+                star.y -= star.dy;
+                if (star.y < 0) {
+                    star.y = canvas.height;
+                    star.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        drawStars();
+
+        // Tab Switching
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+
+            if(tabId === 'clipsTab' && !clipsLoaded) fetchAllClips();
+            if(tabId === 'emotesTab' && !emotesLoaded) fetchEmotes();
+        }
+
+        // Fetch Logic
         const channelSlug = 'devidtur';
+        let clipsLoaded = false;
+        let emotesLoaded = false;
 
         async function fetchAllClips() {
             const container = document.getElementById('clipsContainer');
-            const clipCountText = document.getElementById('clipCount');
+            const clipCountText = document.getElementById('clipCountText');
             const refreshIcon = document.getElementById('clipRefreshIcon');
-            
             refreshIcon.classList.add('fa-spin');
-            
-            let allClips = [];
-            let nextCursor = null;
-            let hasMore = true;
-            let safetyLimit = 10; // מונע בלולאה אינסופית במידת הצורך
 
             try {
-                while (hasMore && safetyLimit > 0) {
-                    safetyLimit--;
-                    
-                    // פנייה ל-API של Kick כולל range=all ומיון לפי תאריך (sort=date)
-                    let apiUrl = `https://kick.com/api/v2/channels/${channelSlug}/clips?sort=date&range=all`;
-                    if (nextCursor) {
-                        apiUrl += `&cursor=${nextCursor}`;
-                    }
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(`https://kick.com/api/v2/channels/${channelSlug}/clips?sort=date&range=all`)}`;
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
 
-                    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
-                    const response = await fetch(proxyUrl);
-                    
-                    if (!response.ok) break;
-
-                    const data = await response.json();
-                    
-                    const clips = data.clips || data;
-                    if (Array.isArray(clips) && clips.length > 0) {
-                        allClips = allClips.concat(clips);
-                        
-                        // בדיקה אם יש עמוד נוסף של קליפים
-                        if (data.nextCursor || (data.pagination && data.pagination.cursor)) {
-                            nextCursor = data.nextCursor || data.pagination.cursor;
-                        } else {
-                            hasMore = false;
-                        }
-                    } else {
-                        hasMore = false;
-                    }
-
-                    // אם אין מנגנון עמודים מוחזר, עצור לאחר הסיבוב הראשון
-                    if (!data.nextCursor && (!data.pagination || !data.pagination.cursor)) {
-                        hasMore = false;
-                    }
-                }
-
-                if (allClips.length > 0) {
-                    clipCountText.innerText = `סה"כ ${allClips.length} קליפים מכל הזמנים`;
+                const clips = data.clips || data;
+                if (Array.isArray(clips) && clips.length > 0) {
+                    clipCountText.innerText = `סה"כ ${clips.length} קליפים מכל הזמנים`;
                     container.innerHTML = '';
-
-                    allClips.forEach(clip => {
+                    clips.forEach(clip => {
                         const card = document.createElement('a');
                         card.className = 'clip-card';
                         card.href = `https://kick.com/${channelSlug}?clip=${clip.id}`;
                         card.target = '_blank';
 
-                        const duration = clip.duration ? `${clip.duration} שניות` : '';
-                        const views = clip.views ? `${clip.views} צפיות` : '';
-
                         card.innerHTML = `
-                            <img class="clip-thumb" src="${clip.thumbnail_url || 'https://via.placeholder.com/320x180'}" alt="${clip.title || 'Clip'}">
+                            <img class="clip-thumb" src="${clip.thumbnail_url || 'https://via.placeholder.com/320x180'}" alt="${clip.title}">
                             <div class="clip-info">
-                                <div class="clip-title">${clip.title || 'קליפ ללא כותרת'}</div>
+                                <div class="clip-title">${clip.title || 'קליפ'}</div>
                                 <div class="clip-meta">
-                                    <span><i class="fa-solid fa-eye"></i> ${views}</span>
-                                    <span>${duration}</span>
+                                    <span><i class="fa-solid fa-eye"></i> ${clip.views || 0} צפיות</span>
+                                    <span>${clip.duration || ''} שניות</span>
                                 </div>
                             </div>
                         `;
                         container.appendChild(card);
                     });
                 } else {
-                    clipCountText.innerText = 'קליפים מ-Kick';
                     container.innerHTML = `<div class="loading-spinner">לא נמצאו קליפים בערוץ.</div>`;
                 }
-
             } catch (err) {
-                clipCountText.innerText = 'קליפים מ-Kick';
-                container.innerHTML = `
-                    <div class="loading-spinner">
-                        לא ניתן למשוך קליפים ישירות כרגע.<br>
-                        <a href="https://kick.com/${channelSlug}/clips?sort=date&range=all" target="_blank" style="color: var(--accent-kick); text-decoration: underline; margin-top: 10px; display: inline-block;">
-                            לחץ כאן לצפייה בקליפים ב-Kick
-                        </a>
-                    </div>`;
+                container.innerHTML = `<div class="loading-spinner">לא ניתן למשוך קליפים דרך ה-API.<br><a href="https://kick.com/${channelSlug}/clips?sort=date&range=all" target="_blank" style="color:var(--accent-kick)">צפה בקליפים ב-Kick</a></div>`;
             } finally {
                 refreshIcon.classList.remove('fa-spin');
+                clipsLoaded = true;
             }
         }
 
-        // טעינה ראשונית
-        fetchAllClips();
+        async function fetchEmotes() {
+            const container = document.getElementById('emotesContainer');
+            try {
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(`https://kick.com/api/v2/channels/${channelSlug}`)}`;
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
 
-        // עדכון אוטומטי כל 10 דקות (600,000 מילי-שניות)
-        setInterval(fetchAllClips, 10 * 60 * 1000);
+                let html = '';
+                if (data && data.emotes && data.emotes.length > 0) {
+                    data.emotes.forEach(e => {
+                        html += `<div class="emote-item"><img src="${e.url}" alt="${e.name}"><span class="emote-name">${e.name}</span></div>`;
+                    });
+                }
+                container.innerHTML = html || `<div class="loading-spinner">אם האימוטים לא נטענים אוטומטית, שלח לי את הקישורים/תמונות שלהם ואוסיף אותם לקוד ישירוֹת!</div>`;
+            } catch (e) {
+                container.innerHTML = `<div class="loading-spinner">שלח לי את תמונות/קישורי האימוטים ואטמיע אותם בקוד!</div>`;
+            } finally {
+                emotesLoaded = true;
+            }
+        }
+
+        // Auto Refresh Clips Every 10 Minutes
+        setInterval(() => {
+            if (clipsLoaded) fetchAllClips();
+        }, 10 * 60 * 1000);
     </script>
 </body>
 </html>
