@@ -11,15 +11,14 @@
     
     <style>
         :root {
-            --bg-color: #08090c;
-            --card-bg: rgba(22, 24, 33, 0.75);
-            --card-hover: rgba(30, 33, 45, 0.9);
-            --accent-kick: #53fc18;
-            --accent-offline: #727a8e;
-            --accent-youtube: #ff0000;
-            --accent-discord: #5865f2;
+            --bg-color: #03060d;
+            --card-bg: rgba(10, 18, 36, 0.75);
+            --card-hover: rgba(18, 30, 58, 0.9);
+            --accent-blue: #0088ff;
+            --accent-blue-glow: #00d2ff;
+            --accent-offline: #50617a;
             --text-color: #ffffff;
-            --text-secondary: #8d93a5;
+            --text-secondary: #8298ba;
         }
 
         * {
@@ -40,20 +39,21 @@
             padding: 30px 20px;
             position: relative;
             overflow-x: hidden;
-            background: radial-gradient(circle at top, #141722 0%, #08090c 100%);
+            background: radial-gradient(circle at top, #09152a 0%, #03060d 100%);
         }
 
-        /* Mouse Glow Cursor Effect */
+        /* Mouse Glow Cursor Effect - Blue Theme */
         #cursorGlow {
             position: fixed;
-            width: 350px;
-            height: 350px;
+            width: 380px;
+            height: 380px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(83, 252, 24, 0.12) 0%, rgba(88, 101, 242, 0.05) 50%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 136, 255, 0.15) 0%, rgba(0, 210, 255, 0.05) 50%, transparent 70%);
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 0;
-            transition: transform 0.05s ease-out;
+            will-change: left, top;
+            transition: left 0.15s cubic-bezier(0.25, 1, 0.5, 1), top 0.15s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Animated Stars Canvas Background */
@@ -67,7 +67,7 @@
             z-index: 0;
         }
 
-        /* Watermark Text Background with Gentle Pulsing Animation */
+        /* Watermark Text Background */
         .bg-watermark {
             position: absolute;
             top: 260px;
@@ -76,21 +76,22 @@
             font-family: 'Montserrat', sans-serif;
             font-size: clamp(4rem, 15vw, 11rem);
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.03);
+            color: rgba(0, 136, 255, 0.03);
             letter-spacing: 12px;
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
             z-index: 0;
             text-transform: uppercase;
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+            -webkit-text-stroke: 1px rgba(0, 136, 255, 0.07);
             animation: watermarkPulse 8s ease-in-out infinite alternate;
+            will-change: transform, opacity;
         }
 
         @keyframes watermarkPulse {
             0% {
                 transform: translate(-50%, -50%) scale(0.98);
-                opacity: 0.7;
+                opacity: 0.6;
             }
             100% {
                 transform: translate(-50%, -50%) scale(1.04);
@@ -98,26 +99,27 @@
             }
         }
 
-        /* Intro Screen Overlay */
+        /* Intro Screen Overlay - Ultra Smooth */
         #introScreen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #08090c;
+            background: #03060d;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 999;
             cursor: pointer;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
         }
 
         #introScreen.hidden {
             opacity: 0;
-            visibility: hidden;
+            transform: scale(1.05);
             pointer-events: none;
         }
 
@@ -126,9 +128,10 @@
             height: 180px;
             border-radius: 50%;
             padding: 4px;
-            background: linear-gradient(135deg, var(--accent-kick), var(--accent-discord));
-            box-shadow: 0 0 50px rgba(83, 252, 24, 0.4);
-            animation: introPulse 2s infinite alternate;
+            background: linear-gradient(135deg, var(--accent-blue-glow), var(--accent-blue));
+            box-shadow: 0 0 50px rgba(0, 136, 255, 0.4);
+            animation: introPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+            will-change: transform, box-shadow;
         }
 
         .intro-avatar-wrapper img {
@@ -147,17 +150,16 @@
             letter-spacing: 3px;
             color: var(--text-color);
             text-transform: uppercase;
-            opacity: 0.8;
-            animation: blinkText 1.5s infinite;
+            animation: blinkText 1.8s ease-in-out infinite;
         }
 
         @keyframes introPulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 30px rgba(83, 252, 24, 0.3); }
-            100% { transform: scale(1.05); box-shadow: 0 0 60px rgba(83, 252, 24, 0.6); }
+            0% { transform: scale(0.96); box-shadow: 0 0 25px rgba(0, 136, 255, 0.3); }
+            100% { transform: scale(1.04); box-shadow: 0 0 60px rgba(0, 210, 255, 0.6); }
         }
 
         @keyframes blinkText {
-            0%, 100% { opacity: 0.4; }
+            0%, 100% { opacity: 0.3; }
             50% { opacity: 1; }
         }
 
@@ -176,10 +178,10 @@
         .top-nav {
             display: flex;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(0, 136, 255, 0.04);
             padding: 5px;
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 136, 255, 0.15);
             margin-bottom: 10px;
             backdrop-filter: blur(10px);
         }
@@ -192,8 +194,8 @@
             color: var(--text-color);
             text-decoration: none;
             letter-spacing: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(0, 136, 255, 0.12);
+            border: 1px solid rgba(0, 136, 255, 0.25);
         }
 
         /* Profile Section */
@@ -210,10 +212,10 @@
             height: 110px;
             border-radius: 50%;
             padding: 3px;
-            background: linear-gradient(135deg, var(--accent-kick), #1f2230);
-            box-shadow: 0 0 30px rgba(83, 252, 24, 0.2);
+            background: linear-gradient(135deg, var(--accent-blue-glow), #0b1d3a);
+            box-shadow: 0 0 30px rgba(0, 136, 255, 0.3);
             margin-bottom: 5px;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .avatar-wrapper img {
@@ -253,14 +255,14 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(0, 136, 255, 0.05);
             color: var(--text-secondary);
             padding: 5px 16px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 1px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 136, 255, 0.15);
             margin-top: 4px;
             transition: all 0.3s ease;
         }
@@ -274,14 +276,14 @@
         }
 
         .status-badge.online {
-            border-color: rgba(83, 252, 24, 0.3);
+            border-color: rgba(0, 210, 255, 0.4);
             color: #ffffff;
-            background: rgba(83, 252, 24, 0.08);
+            background: rgba(0, 136, 255, 0.15);
         }
 
         .status-badge.online .dot {
-            background-color: var(--accent-kick);
-            box-shadow: 0 0 8px var(--accent-kick);
+            background-color: var(--accent-blue-glow);
+            box-shadow: 0 0 10px var(--accent-blue-glow);
             animation: pulse 1.5s infinite;
         }
 
@@ -312,7 +314,7 @@
             color: var(--text-color);
             font-weight: 700;
             font-size: 1.05rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 136, 255, 0.15);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -330,7 +332,8 @@
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 136, 255, 0.1);
+            color: var(--accent-blue-glow);
         }
 
         .link-card .external-icon {
@@ -342,41 +345,13 @@
         .link-card:hover {
             transform: translateY(-3px);
             background-color: var(--card-hover);
+            border-color: rgba(0, 210, 255, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 136, 255, 0.25);
         }
 
         .link-card:hover .external-icon {
             color: var(--text-color);
             transform: translate(2px, -2px);
-        }
-
-        /* Kick */
-        .link-card.kick:hover {
-            border-color: rgba(83, 252, 24, 0.4);
-            box-shadow: 0 8px 25px rgba(83, 252, 24, 0.15);
-        }
-        .link-card.kick .icon-box {
-            color: var(--accent-kick);
-            background: rgba(83, 252, 24, 0.1);
-        }
-
-        /* YouTube */
-        .link-card.youtube:hover {
-            border-color: rgba(255, 0, 0, 0.4);
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.15);
-        }
-        .link-card.youtube .icon-box {
-            color: var(--accent-youtube);
-            background: rgba(255, 0, 0, 0.1);
-        }
-
-        /* Discord */
-        .link-card.discord:hover {
-            border-color: rgba(88, 101, 242, 0.4);
-            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.15);
-        }
-        .link-card.discord .icon-box {
-            color: var(--accent-discord);
-            background: rgba(88, 101, 242, 0.1);
         }
 
         footer {
@@ -427,7 +402,7 @@
         <div class="links-list">
             
             <!-- Kick -->
-            <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
+            <a href="https://kick.com/devidtur" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="icon-box">
                         <i class="fa-solid fa-play"></i>
@@ -438,7 +413,7 @@
             </a>
 
             <!-- YouTube -->
-            <a href="https://www.youtube.com/@devidtur" target="_blank" class="link-card youtube">
+            <a href="https://www.youtube.com/@devidtur" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="icon-box">
                         <i class="fa-brands fa-youtube"></i>
@@ -449,7 +424,7 @@
             </a>
 
             <!-- Discord -->
-            <a href="https://discord.gg/dFRSaAVqeQ" target="_blank" class="link-card discord">
+            <a href="https://discord.gg/dFRSaAVqeQ" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="icon-box">
                         <i class="fa-brands fa-discord"></i>
@@ -468,25 +443,30 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // 1. Intro Screen Dismiss
+        // 1. Intro Screen Dismiss (Smoother Transition)
         function dismissIntro() {
             const intro = document.getElementById('introScreen');
-            intro.classList.add('hidden');
+            if (intro && !intro.classList.contains('hidden')) {
+                intro.classList.add('hidden');
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                }, 800);
+            }
         }
 
-        // Auto dismiss intro after 1.5s if not clicked
+        // Auto dismiss intro after 1.2s
         setTimeout(() => {
             dismissIntro();
-        }, 1500);
+        }, 1200);
 
-        // 2. Mouse Glow Movement
+        // 2. Smooth Mouse Glow
         const cursorGlow = document.getElementById('cursorGlow');
         document.addEventListener('mousemove', (e) => {
             cursorGlow.style.left = e.clientX + 'px';
             cursorGlow.style.top = e.clientY + 'px';
         });
 
-        // 3. Animated Stars Background
+        // 3. Blue Animated Stars Background
         const canvas = document.getElementById('starsCanvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -499,15 +479,17 @@
 
         function initStars() {
             stars = [];
-            const count = Math.floor((canvas.width * canvas.height) / 8000);
+            const count = Math.floor((canvas.width * canvas.height) / 7500);
             for (let i = 0; i < count; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     radius: Math.random() * 1.5 + 0.5,
                     alpha: Math.random(),
-                    speed: Math.random() * 0.02 + 0.005,
-                    dy: Math.random() * 0.3 + 0.1
+                    speed: Math.random() * 0.015 + 0.005,
+                    dy: Math.random() * 0.25 + 0.08,
+                    // גווני כחול ותכלת לכוכבים
+                    color: Math.random() > 0.4 ? 'rgba(0, 210, 255, ' : 'rgba(255, 255, 255, '
                 });
             }
         }
@@ -517,12 +499,11 @@
             stars.forEach(star => {
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+                ctx.fillStyle = star.color + star.alpha + ')';
                 ctx.fill();
 
-                // Twinkle & Motion
                 star.alpha += star.speed;
-                if (star.alpha >= 1 || star.alpha <= 0.1) {
+                if (star.alpha >= 0.9 || star.alpha <= 0.1) {
                     star.speed = -star.speed;
                 }
                 star.y -= star.dy;
@@ -554,11 +535,11 @@
                     if (channelData && channelData.livestream !== null) {
                         statusBadge.classList.add('online');
                         statusText.innerText = 'ONLINE';
-                        avatarWrapper.style.boxShadow = '0 0 35px rgba(83, 252, 24, 0.5)';
+                        avatarWrapper.style.boxShadow = '0 0 35px rgba(0, 210, 255, 0.6)';
                     } else {
                         statusBadge.classList.remove('online');
                         statusText.innerText = 'OFFLINE';
-                        avatarWrapper.style.boxShadow = 'none';
+                        avatarWrapper.style.boxShadow = '0 0 30px rgba(0, 136, 255, 0.3)';
                     }
                 } else {
                     statusText.innerText = 'OFFLINE';
