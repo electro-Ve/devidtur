@@ -200,11 +200,9 @@
             align-items: center;
             gap: 20px;
             z-index: 1;
-            opacity: 1;
-            transform: translateY(0);
         }
 
-        /* TOP NAV BAR */
+        /* TOP NAV BAR - סדר: קליפים מימין, אימוטים באמצע, לינקים משמאל */
         .top-nav {
             display: flex;
             gap: 8px;
@@ -289,7 +287,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* LINKS */
+        /* LINKS & CLIPS BUTTON */
         .link-card {
             display: flex;
             align-items: center;
@@ -315,7 +313,7 @@
 
         .link-content { display: flex; align-items: center; gap: 12px; }
 
-        /* CLIPS & EMOTES */
+        /* EMOTES */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -323,68 +321,6 @@
             font-size: 0.85rem;
             color: var(--text-secondary);
             padding: 0 5px;
-        }
-
-        .refresh-status {
-            font-size: 0.75rem;
-            color: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .clips-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-            width: 100%;
-        }
-
-        .clip-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: 14px;
-            overflow: hidden;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .clip-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-4px);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.25);
-        }
-
-        .clip-thumb {
-            width: 100%;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-            background: #000;
-        }
-
-        .clip-info {
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .clip-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .clip-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
         }
 
         .emotes-grid {
@@ -438,14 +374,6 @@
             white-space: nowrap;
         }
 
-        .loading-spinner {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            grid-column: 1 / -1;
-        }
-
         footer {
             margin-top: 25px;
             font-size: 0.8rem;
@@ -479,11 +407,11 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- התפריט העליון (נפתח ישר על לינקים) -->
+        <!-- התפריט העליון: קליפס (מימין), אימוטס (באמצע), לינקים (משמאל) -->
         <div class="top-nav">
-            <button class="nav-btn" onclick="switchTab('clipsTab', this)">CLIPS</button>
+            <button class="nav-btn active" onclick="switchTab('clipsTab', this)">CLIPS</button>
             <button class="nav-btn" onclick="switchTab('emotesTab', this)">EMOTES</button>
-            <button class="nav-btn active" onclick="switchTab('linksTab', this)">LINKS</button>
+            <button class="nav-btn" onclick="switchTab('linksTab', this)">LINKS</button>
         </div>
 
         <div class="profile">
@@ -493,18 +421,14 @@
             <h1 class="username">DEVIDTUR</h1>
         </div>
 
-        <!-- TAB 1: CLIPS -->
-        <div id="clipsTab" class="tab-content">
-            <div class="section-header">
-                <span id="clipCountText">קליפים מכל הזמנים</span>
-                <div class="refresh-status">
-                    <i class="fa-solid fa-rotate fa-spin" id="clipRefreshIcon"></i>
-                    <span>מתעדכן כל 10 דקות</span>
+        <!-- TAB 1: CLIPS (קישור ישיר ומהיר מכל הזמנים) -->
+        <div id="clipsTab" class="tab-content active">
+            <a href="https://kick.com/devidtur/clips?sort=date&range=all" target="_blank" class="link-card kick">
+                <div class="link-content">
+                    <span>צפה בכל הקליפים ב-Kick</span>
+                    <i class="fa-solid fa-clapperboard"></i>
                 </div>
-            </div>
-            <div id="clipsContainer" class="clips-grid">
-                <div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> טוען קליפים...</div>
-            </div>
+            </a>
         </div>
 
         <!-- TAB 2: EMOTES -->
@@ -513,7 +437,6 @@
                 <span>אימוטים ובאדג'ים של סאבים</span>
             </div>
             <div class="emotes-grid">
-                
                 <div class="emote-item">
                     <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237131399397386/2cd43413218e2eb5.png?ex=6ab8844d&is=6ab732cd&hm=2210a619f0913e940ab39b919a3f025067cbbfb56bd5dfd3f402a9202f18b877&" alt="Emote">
                     <span class="emote-name">Bear Cigar</span>
@@ -530,7 +453,6 @@
                     <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237132439453746/fdde141bcecc8b28.png?ex=6ab8844e&is=6ab732ce&hm=706511ca2398c70f9cd1669f37dd36eeae5795d31a0a9e4d17c67d23869feb8b&" alt="Emote">
                     <span class="emote-name">Bear AK</span>
                 </div>
-
                 <div class="emote-item">
                     <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237132737384469/e4cfe076eea1e91f.png?ex=6ab8844e&is=6ab732ce&hm=1ba4d738ebf94b5aaa9f3fe57f7c81c93151c3be05bda2e936f9b5031f3808c1&" alt="Emote">
                     <span class="emote-name">Rage vs Bear</span>
@@ -547,12 +469,11 @@
                     <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237134062649344/fullsize.png?ex=6ab8844e&is=6ab732ce&hm=e35caf6f0505d6cfad50b6e73ad542b1505bddfd981bc7066021b0913ecfb868&" alt="Emote">
                     <span class="emote-name">Bear Crying</span>
                 </div>
-
             </div>
         </div>
 
         <!-- TAB 3: LINKS -->
-        <div id="linksTab" class="tab-content active">
+        <div id="linksTab" class="tab-content">
             <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
                 <div class="link-content">
                     <span>Kick</span>
@@ -591,10 +512,6 @@
             if (intro) {
                 intro.addEventListener('pointerdown', enterSite);
             }
-            // טעינת קליפים ראשונית ברקע כדי שיהיו מוכנים כשתלחץ עליהם
-            fetchAllClips();
-            // הגדרת רענון אוטומטי כל 10 דקות (600,000 מילישניות)
-            setInterval(fetchAllClips, 600000);
         });
 
         const cursorGlow = document.getElementById('cursorGlow');
@@ -674,55 +591,6 @@
             
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
-        }
-
-        const channelSlug = 'devidtur';
-        let clipsLoaded = false;
-
-        async function fetchAllClips() {
-            const container = document.getElementById('clipsContainer');
-            const clipCountText = document.getElementById('clipCountText');
-            const refreshIcon = document.getElementById('clipRefreshIcon');
-            if (refreshIcon) refreshIcon.classList.add('fa-spin');
-
-            try {
-                // משיכת כל הקליפים מה-API של קיק עם מיון לפי תאריך ולכל הזמנים (range=all, sort=date)
-                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://kick.com/api/v2/channels/' + channelSlug + '/clips?sort=date&range=all');
-                const response = await fetch(proxyUrl);
-                const data = await response.json();
-
-                const clips = data.clips || data;
-                if (Array.isArray(clips) && clips.length > 0) {
-                    if (clipCountText) clipCountText.innerText = 'סה"כ ' + clips.length + ' קליפים מכל הזמנים';
-                    container.innerHTML = '';
-                    clips.forEach(function(clip) {
-                        const card = document.createElement('a');
-                        card.className = 'clip-card';
-                        card.href = 'https://kick.com/' + channelSlug + '?clip=' + clip.id;
-                        card.target = '_blank';
-
-                        card.innerHTML = 
-                            '<img class="clip-thumb" src="' + (clip.thumbnail_url || 'https://via.placeholder.com/320x180') + '" alt="' + (clip.title || '') + '">' +
-                            '<div class="clip-info">' +
-                                '<div class="clip-title">' + (clip.title || 'קליפ') + '</div>' +
-                                '<div class="clip-meta">' +
-                                    '<span><i class="fa-solid fa-eye"></i> ' + (clip.views || 0) + ' צפיות</span>' +
-                                    '<span>' + (clip.duration || '') + ' שניות</span>' +
-                                '</div>' +
-                            '</div>';
-                        container.appendChild(card);
-                    });
-                } else {
-                    container.innerHTML = '<div class="loading-spinner">לא נמצאו קליפים בערוץ.</div>';
-                }
-            } catch (err) {
-                if (container) {
-                    container.innerHTML = '<div class="loading-spinner">לא ניתן למשוך קליפים דרך ה-API כרגע.<br><a href="https://kick.com/' + channelSlug + '/clips?sort=date&range=all" target="_blank" style="color:var(--accent-kick)">צפה בקליפים ב-Kick</a></div>';
-                }
-            } finally {
-                if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-                clipsLoaded = true;
-            }
         }
     </script>
 </body>
