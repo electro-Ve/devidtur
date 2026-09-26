@@ -479,7 +479,7 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- התפריט העליון -->
+        <!-- התפריט העליון (נפתח ישר על לינקים) -->
         <div class="top-nav">
             <button class="nav-btn" onclick="switchTab('clipsTab', this)">CLIPS</button>
             <button class="nav-btn" onclick="switchTab('emotesTab', this)">EMOTES</button>
@@ -591,6 +591,10 @@
             if (intro) {
                 intro.addEventListener('pointerdown', enterSite);
             }
+            // טעינת קליפים ראשונית ברקע כדי שיהיו מוכנים כשתלחץ עליהם
+            fetchAllClips();
+            // הגדרת רענון אוטומטי כל 10 דקות (600,000 מילישניות)
+            setInterval(fetchAllClips, 600000);
         });
 
         const cursorGlow = document.getElementById('cursorGlow');
@@ -670,8 +674,6 @@
             
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
-
-            if(tabId === 'clipsTab' && !clipsLoaded) fetchAllClips();
         }
 
         const channelSlug = 'devidtur';
@@ -684,6 +686,7 @@
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
             try {
+                // משיכת כל הקליפים מה-API של קיק עם מיון לפי תאריך ולכל הזמנים (range=all, sort=date)
                 const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://kick.com/api/v2/channels/' + channelSlug + '/clips?sort=date&range=all');
                 const response = await fetch(proxyUrl);
                 const data = await response.json();
