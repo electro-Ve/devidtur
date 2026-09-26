@@ -423,8 +423,8 @@
         }
 
         .emote-item img {
-            width: 64px;
-            height: 64px;
+            width: 70px;
+            height: 70px;
             object-fit: contain;
         }
 
@@ -478,10 +478,12 @@
 
     <!-- Main Container -->
     <div class="container">
+        
+        <!-- התפריט העליון מסודר בדיוק כמו בתמונה שלך -->
         <div class="top-nav">
-            <button class="nav-btn active" onclick="switchTab('linksTab', this)">LINKS</button>
-            <button class="nav-btn" onclick="switchTab('emotesTab', this)">EMOTES</button>
             <button class="nav-btn" onclick="switchTab('clipsTab', this)">CLIPS</button>
+            <button class="nav-btn active" onclick="switchTab('emotesTab', this)">EMOTES</button>
+            <button class="nav-btn" onclick="switchTab('linksTab', this)">LINKS</button>
         </div>
 
         <div class="profile">
@@ -491,8 +493,68 @@
             <h1 class="username">DEVIDTUR</h1>
         </div>
 
-        <!-- TAB 1: LINKS -->
-        <div id="linksTab" class="tab-content active">
+        <!-- TAB 1: CLIPS (מוסתר כברירת מחדל) -->
+        <div id="clipsTab" class="tab-content">
+            <div class="section-header">
+                <span id="clipCountText">קליפים מכל הזמנים</span>
+                <div class="refresh-status">
+                    <i class="fa-solid fa-rotate fa-spin" id="clipRefreshIcon"></i>
+                    <span>מתעדכן כל 10 דקות</span>
+                </div>
+            </div>
+            <div id="clipsContainer" class="clips-grid">
+                <div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> טוען קליפים...</div>
+            </div>
+        </div>
+
+        <!-- TAB 2: EMOTES (פעיל כברירת מחדל) -->
+        <div id="emotesTab" class="tab-content active">
+            <div class="section-header">
+                <span>אימוטים ובאדג'ים של סאבים</span>
+            </div>
+            <div class="emotes-grid">
+                
+                <!-- שורה עליונה לפי התמונה שלך -->
+                <div class="emote-item">
+                    <img src="YOUR_IMAGE_LINK_HERE_1.png" alt="Bear Cigar">
+                    <span class="emote-name">Bear Cigar</span>
+                </div>
+                <div class="emote-item">
+                    <img src="YOUR_IMAGE_LINK_HERE_2.png" alt="Devid Hoodie">
+                    <span class="emote-name">Devid Hoodie</span>
+                </div>
+                <div class="emote-item">
+                    <img src="YOUR_IMAGE_LINK_HERE_3.png" alt="Pika Mew">
+                    <span class="emote-name">Pika Mew</span>
+                </div>
+                <div class="emote-item">
+                    <img src="YOUR_IMAGE_LINK_HERE_4.png" alt="Bear AK">
+                    <span class="emote-name">Bear AK</span>
+                </div>
+
+                <!-- שורה תחתונה לפי התמונה שלך -->
+                <div class="emote-item">
+                    <img src="YOUR_IMAGE_LINK_HERE_5.png" alt="Bear Crying">
+                    <span class="emote-name">Bear Crying</span>
+                </div>
+                <div class="emote-item">
+                    <img src="YOUR_IMAGE_LINK_HERE_6.png" alt="Rage vs Bear">
+                    <span class="emote-name">Rage vs Bear</span>
+                </div>
+                <div class="emote-item">
+                    <img src="YOUR_IMAGE_LINK_HERE_7.png" alt="Bear Grenade">
+                    <span class="emote-name">Bear Grenade</span>
+                </div>
+                <div class="emote-item">
+                    <img src="YOUR_IMAGE_LINK_HERE_8.png" alt="Bear Heart">
+                    <span class="emote-name">Bear Heart</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 3: LINKS (מוסתר כברירת מחדל) -->
+        <div id="linksTab" class="tab-content">
             <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
                 <div class="link-content">
                     <span>Kick</span>
@@ -511,28 +573,6 @@
                     <i class="fa-brands fa-discord"></i>
                 </div>
             </a>
-        </div>
-
-        <!-- TAB 2: EMOTES -->
-        <div id="emotesTab" class="tab-content">
-            <div class="section-header">
-                <span>אימוטים ובאדג'ים של סאבים</span>
-            </div>
-            <div id="emotesContainer" class="emotes-grid"></div>
-        </div>
-
-        <!-- TAB 3: CLIPS -->
-        <div id="clipsTab" class="tab-content">
-            <div class="section-header">
-                <span id="clipCountText">קליפים מכל הזמנים</span>
-                <div class="refresh-status">
-                    <i class="fa-solid fa-rotate fa-spin" id="clipRefreshIcon"></i>
-                    <span>מתעדכן כל 10 דקות</span>
-                </div>
-            </div>
-            <div id="clipsContainer" class="clips-grid">
-                <div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> טוען קליפים...</div>
-            </div>
         </div>
 
         <footer>© DEVIDTUR | ALL RIGHTS RESERVED</footer>
@@ -639,59 +679,6 @@
         const channelSlug = 'devidtur';
         let clipsLoaded = false;
 
-        // SVG Placeholder Generator for missing local files
-        function getSvgPlaceholder(text) {
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-                <rect width="100" height="100" rx="15" fill="#0d1b2a"/>
-                <circle cx="50" cy="40" r="20" fill="#00d2ff" opacity="0.3"/>
-                <text x="50" y="75" font-family="sans-serif" font-size="10" font-weight="bold" fill="#00d2ff" text-anchor="middle">${text}</text>
-            </svg>`;
-            return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
-        }
-
-        const customEmotes = [
-            { name: 'Bear AK', file: 'emotes/1.png' },
-            { name: 'Pika Mew', file: 'emotes/2.png' },
-            { name: 'Devid Hoodie', file: 'emotes/3.png' },
-            { name: 'Bear Cigar', file: 'emotes/4.png' },
-            { name: 'Bear Heart', file: 'emotes/5.png' },
-            { name: 'Bear Grenade', file: 'emotes/6.png' },
-            { name: 'Rage vs Bear', file: 'emotes/7.png' },
-            { name: 'Bear Crying', file: 'emotes/8.png' }
-        ];
-
-        function renderEmotes() {
-            const container = document.getElementById('emotesContainer');
-            if (!container) return;
-            
-            container.innerHTML = '';
-            
-            customEmotes.forEach(function(e) {
-                const item = document.createElement('div');
-                item.className = 'emote-item';
-
-                const img = document.createElement('img');
-                img.alt = e.name;
-                img.src = e.file;
-                
-                // Fallback directly to generated SVG icon if local file is missing
-                img.onerror = function() {
-                    this.onerror = null;
-                    this.src = getSvgPlaceholder(e.name);
-                };
-
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'emote-name';
-                nameSpan.textContent = e.name;
-
-                item.appendChild(img);
-                item.appendChild(nameSpan);
-                container.appendChild(item);
-            });
-        }
-
-        renderEmotes();
-
         async function fetchAllClips() {
             const container = document.getElementById('clipsContainer');
             const clipCountText = document.getElementById('clipCountText');
@@ -737,9 +724,8 @@
             }
         }
 
-        setInterval(function() {
-            if (clipsLoaded) fetchAllClips();
-        }, 10 * 60 * 1000);
+        // טעינת קליפים בפעם הראשונה רק אם המשתמש נכנס לטאב
+        // אבל אפשר גם לטעון אוטומטית ברקע אם רוצים
     </script>
 </body>
 </html>
