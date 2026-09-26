@@ -13,7 +13,6 @@
         :root {
             --bg-color: #03060d;
             --card-bg: rgba(10, 18, 36, 0.75);
-            --card-hover: rgba(18, 30, 58, 0.9);
             --accent-kick: #53fc18;
             --accent-youtube: #ff0000;
             --accent-discord: #5865f2;
@@ -28,6 +27,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Rubik', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -44,71 +44,13 @@
             background: radial-gradient(circle at top, #09152a 0%, #03060d 100%);
         }
 
-        /* Mouse Glow Cursor Effect */
-        #cursorGlow {
-            position: fixed;
-            width: 380px;
-            height: 380px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 136, 255, 0.15) 0%, rgba(0, 210, 255, 0.05) 50%, transparent 70%);
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            will-change: left, top;
-            transition: left 0.1s cubic-bezier(0.25, 1, 0.5, 1), top 0.1s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        /* Animated Stars Canvas Background */
-        #starsCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Watermark Text Background */
-        .bg-watermark {
-            position: absolute;
-            top: 260px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(4rem, 15vw, 11rem);
-            font-weight: 900;
-            color: rgba(0, 136, 255, 0.03);
-            letter-spacing: 12px;
-            white-space: nowrap;
-            pointer-events: none;
-            user-select: none;
-            z-index: 0;
-            text-transform: uppercase;
-            -webkit-text-stroke: 1px rgba(0, 136, 255, 0.07);
-            animation: watermarkPulse 8s ease-in-out infinite alternate;
-            will-change: transform, opacity;
-        }
-
-        @keyframes watermarkPulse {
-            0% {
-                transform: translate(-50%, -50%) scale(0.98);
-                opacity: 0.6;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1.04);
-                opacity: 1;
-            }
-        }
-
-        /* Intro Screen Overlay - Exact Sensei FR Style */
+        /* INTRO SCREEN (OVERLAY) */
         #introScreen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #03060d;
+            inset: 0;
+            background: rgba(3, 6, 13, 0.98);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -116,7 +58,9 @@
             z-index: 99999;
             cursor: pointer;
             user-select: none;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+                        visibility 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
 
         .intro-content {
@@ -124,28 +68,19 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        #introScreen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        #introScreen.fade-out .intro-content {
-            transform: scale(1.15);
-            opacity: 0;
+            transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
         }
 
         .intro-avatar-wrapper {
-            width: 160px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             padding: 4px;
             background: linear-gradient(135deg, var(--accent-blue-glow), #0088ff);
-            box-shadow: 0 0 40px rgba(0, 136, 255, 0.35);
-            animation: introPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+            box-shadow: 0 0 45px rgba(0, 136, 255, 0.4);
+            animation: introPulse 2.2s ease-in-out infinite alternate;
         }
 
         .intro-avatar-wrapper img {
@@ -164,20 +99,32 @@
             letter-spacing: 4px;
             color: var(--text-color);
             text-transform: uppercase;
-            animation: blinkText 2s ease-in-out infinite;
+            animation: blinkText 1.8s ease-in-out infinite;
         }
 
         @keyframes introPulse {
-            0% { transform: scale(0.97); box-shadow: 0 0 20px rgba(0, 136, 255, 0.25); }
-            100% { transform: scale(1.03); box-shadow: 0 0 50px rgba(0, 210, 255, 0.5); }
+            0% { transform: scale(0.96); box-shadow: 0 0 20px rgba(0, 136, 255, 0.2); }
+            100% { transform: scale(1.04); box-shadow: 0 0 55px rgba(0, 210, 255, 0.55); }
         }
 
         @keyframes blinkText {
-            0%, 100% { opacity: 0.4; }
+            0%, 100% { opacity: 0.35; }
             50% { opacity: 1; }
         }
 
-        /* Main Container */
+        /* WHEN INTRO IS CLOSED */
+        #introScreen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #introScreen.fade-out .intro-content {
+            transform: scale(1.35);
+            opacity: 0;
+        }
+
+        /* MAIN CONTAINER (POP OUT EFFECT) */
         .container {
             width: 100%;
             max-width: 480px;
@@ -186,6 +133,70 @@
             align-items: center;
             gap: 20px;
             z-index: 1;
+            
+            /* Initial State Before Click (Small & Hidden) */
+            opacity: 0;
+            transform: scale(0.85) translateY(30px);
+            filter: blur(10px);
+            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
+        }
+
+        /* Active State After Click (Pop-Out to Screen) */
+        body.site-active .container {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0px);
+        }
+
+        /* Cursor Glow Effect */
+        #cursorGlow {
+            position: fixed;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 136, 255, 0.15) 0%, rgba(0, 210, 255, 0.05) 50%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            will-change: left, top;
+        }
+
+        /* Stars Canvas */
+        #starsCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Watermark Background */
+        .bg-watermark {
+            position: absolute;
+            top: 260px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(4rem, 15vw, 11rem);
+            font-weight: 900;
+            color: rgba(0, 136, 255, 0.03);
+            letter-spacing: 12px;
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+            text-transform: uppercase;
+            -webkit-text-stroke: 1px rgba(0, 136, 255, 0.07);
+            animation: watermarkPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes watermarkPulse {
+            0% { transform: translate(-50%, -50%) scale(0.98); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.04); opacity: 1; }
         }
 
         /* Top Navigation Bar */
@@ -212,7 +223,7 @@
             border: 1px solid rgba(0, 136, 255, 0.25);
         }
 
-        /* Profile Section */
+        /* Profile */
         .profile {
             text-align: center;
             display: flex;
@@ -229,7 +240,6 @@
             background: linear-gradient(135deg, var(--accent-blue-glow), #0b1d3a);
             box-shadow: 0 0 30px rgba(0, 136, 255, 0.3);
             margin-bottom: 5px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .avatar-wrapper img {
@@ -237,7 +247,6 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            background-color: var(--card-bg);
             display: block;
         }
 
@@ -261,7 +270,6 @@
         .bio {
             font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-top: 2px;
         }
 
         /* Status Badge */
@@ -278,7 +286,6 @@
             letter-spacing: 1px;
             border: 1px solid rgba(0, 136, 255, 0.15);
             margin-top: 4px;
-            transition: all 0.3s ease;
         }
 
         .dot {
@@ -286,7 +293,6 @@
             height: 7px;
             border-radius: 50%;
             background-color: var(--accent-offline);
-            transition: all 0.3s ease;
         }
 
         .status-badge.online {
@@ -328,7 +334,6 @@
             font-weight: 800;
             font-size: 1.3rem;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
         }
 
         .link-content {
@@ -337,11 +342,7 @@
             gap: 12px;
         }
 
-        .link-card i {
-            font-size: 1.4rem;
-        }
-
-        /* YouTube Card Style */
+        /* Card Styles */
         .link-card.youtube {
             border: 1px solid rgba(255, 0, 0, 0.5);
             color: #ff3b3b;
@@ -351,10 +352,8 @@
             border-color: rgba(255, 0, 0, 0.9);
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.35);
             transform: translateY(-3px);
-            background-color: rgba(25, 15, 25, 0.9);
         }
 
-        /* Kick Card Style */
         .link-card.kick {
             border: 1px solid rgba(83, 252, 24, 0.5);
             color: #53fc18;
@@ -364,10 +363,8 @@
             border-color: rgba(83, 252, 24, 0.9);
             box-shadow: 0 0 30px rgba(83, 252, 24, 0.35);
             transform: translateY(-3px);
-            background-color: rgba(12, 30, 20, 0.9);
         }
 
-        /* Discord Card Style */
         .link-card.discord {
             border: 1px solid rgba(88, 101, 242, 0.5);
             color: #7289da;
@@ -377,7 +374,6 @@
             border-color: rgba(88, 101, 242, 0.9);
             box-shadow: 0 0 30px rgba(88, 101, 242, 0.35);
             transform: translateY(-3px);
-            background-color: rgba(15, 20, 40, 0.9);
         }
 
         footer {
@@ -405,13 +401,12 @@
     <canvas id="starsCanvas"></canvas>
     <div class="bg-watermark">DEVIDTUR</div>
 
+    <!-- Main Content Container -->
     <div class="container">
-        <!-- Top Navigation -->
         <div class="top-nav">
             <a href="#" class="nav-item">LINKS</a>
         </div>
 
-        <!-- Profile -->
         <div class="profile">
             <div class="avatar-wrapper" id="avatarWrapper">
                 <img src="https://files.kick.com/images/user/3901323/profile_image/conversion/88de265e-9f7a-4ffa-884c-bfa702331367-fullsize.webp" alt="devidtur profile">
@@ -426,10 +421,7 @@
             </div>
         </div>
 
-        <!-- Links List -->
         <div class="links-list">
-            
-            <!-- Kick -->
             <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
                 <div class="link-content">
                     <span>Kick</span>
@@ -437,7 +429,6 @@
                 </div>
             </a>
 
-            <!-- YouTube -->
             <a href="https://www.youtube.com/@devidtur" target="_blank" class="link-card youtube">
                 <div class="link-content">
                     <span>YouTube</span>
@@ -445,14 +436,12 @@
                 </div>
             </a>
 
-            <!-- Discord -->
             <a href="https://discord.gg/dFRSaAVqeQ" target="_blank" class="link-card discord">
                 <div class="link-content">
                     <span>Discord</span>
                     <i class="fa-brands fa-discord"></i>
                 </div>
             </a>
-
         </div>
 
         <footer>
@@ -462,30 +451,46 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // 1. Intro Screen Click to Enter (Sensei FR Style)
         const introScreen = document.getElementById('introScreen');
-        let isClosed = false;
+        let isOpened = false;
 
-        function closeIntroScreen() {
-            if (isClosed) return;
-            isClosed = true;
+        function handleEnter() {
+            if (isOpened) return;
+            isOpened = true;
+
+            // Trigger Pop-Out for the main container
+            document.body.classList.add('site-active');
             introScreen.classList.add('fade-out');
+
             setTimeout(() => {
                 introScreen.style.display = 'none';
-            }, 800);
+            }, 750);
         }
 
-        introScreen.addEventListener('click', closeIntroScreen);
-        introScreen.addEventListener('touchstart', closeIntroScreen, { passive: true });
+        // Global Event Listeners for seamless response
+        introScreen.addEventListener('click', handleEnter);
+        introScreen.addEventListener('touchstart', handleEnter, { passive: true });
 
-        // 2. Mouse Glow Effect
+        // Smooth Mouse Cursor Glow
         const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
         document.addEventListener('mousemove', (e) => {
-            cursorGlow.style.left = e.clientX + 'px';
-            cursorGlow.style.top = e.clientY + 'px';
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         }, { passive: true });
 
-        // 3. Blue Animated Stars Background
+        function animateCursor() {
+            currentX += (mouseX - currentX) * 0.15;
+            currentY += (mouseY - currentY) * 0.15;
+            cursorGlow.style.left = currentX + 'px';
+            cursorGlow.style.top = currentY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Canvas Stars
         const canvas = document.getElementById('starsCanvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -498,14 +503,14 @@
 
         function initStars() {
             stars = [];
-            const count = Math.floor((canvas.width * canvas.height) / 8000);
+            const count = Math.floor((canvas.width * canvas.height) / 9000);
             for (let i = 0; i < count; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     radius: Math.random() * 1.5 + 0.5,
                     alpha: Math.random(),
-                    speed: Math.random() * 0.015 + 0.005,
+                    speed: Math.random() * 0.012 + 0.005,
                     dy: Math.random() * 0.2 + 0.05,
                     color: Math.random() > 0.4 ? 'rgba(0, 210, 255, ' : 'rgba(255, 255, 255, '
                 });
@@ -537,7 +542,7 @@
         resizeCanvas();
         drawStars();
 
-        // 4. Kick Live Status Check
+        // Kick Live Status Check
         async function checkKickLiveStatus() {
             const channelName = 'devidtur';
             const statusBadge = document.getElementById('statusBadge');
