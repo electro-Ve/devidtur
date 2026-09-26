@@ -101,31 +101,41 @@
             }
         }
 
-        /* Intro Screen Overlay - Smooth Sensei-FR Fade Style */
+        /* Intro Screen Overlay - Exact Sensei FR Style */
         #introScreen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(3, 6, 13, 0.96);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: #03060d;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            z-index: 99999;
             cursor: pointer;
-            transform: translateZ(0);
-            will-change: opacity, visibility;
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         #introScreen.fade-out {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
+        }
+
+        #introScreen.fade-out .intro-content {
+            transform: scale(1.15);
+            opacity: 0;
         }
 
         .intro-avatar-wrapper {
@@ -136,11 +146,6 @@
             background: linear-gradient(135deg, var(--accent-blue-glow), #0088ff);
             box-shadow: 0 0 40px rgba(0, 136, 255, 0.35);
             animation: introPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
-            transition: transform 0.5s ease;
-        }
-
-        #introScreen:hover .intro-avatar-wrapper {
-            transform: scale(1.03);
         }
 
         .intro-avatar-wrapper img {
@@ -154,7 +159,7 @@
         .intro-text {
             margin-top: 25px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 800;
             letter-spacing: 4px;
             color: var(--text-color);
@@ -387,10 +392,12 @@
 
     <!-- Intro Screen -->
     <div id="introScreen">
-        <div class="intro-avatar-wrapper">
-            <img src="https://files.kick.com/images/user/3901323/profile_image/conversion/88de265e-9f7a-4ffa-884c-bfa702331367-fullsize.webp" alt="DEVIDTUR Profile">
+        <div class="intro-content">
+            <div class="intro-avatar-wrapper">
+                <img src="https://files.kick.com/images/user/3901323/profile_image/conversion/88de265e-9f7a-4ffa-884c-bfa702331367-fullsize.webp" alt="DEVIDTUR Profile">
+            </div>
+            <div class="intro-text">CLICK TO ENTER</div>
         </div>
-        <div class="intro-text">CLICK TO ENTER</div>
     </div>
 
     <!-- Background Elements -->
@@ -455,26 +462,21 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // 1. Fail-Safe Intro Screen Dismissal
+        // 1. Intro Screen Click to Enter (Sensei FR Style)
         const introScreen = document.getElementById('introScreen');
         let isClosed = false;
 
-        function handleCloseIntro() {
+        function closeIntroScreen() {
             if (isClosed) return;
             isClosed = true;
             introScreen.classList.add('fade-out');
             setTimeout(() => {
                 introScreen.style.display = 'none';
-            }, 850);
+            }, 800);
         }
 
-        // Event listeners for Click, Touch (Mobile) & Keydown
-        introScreen.addEventListener('click', handleCloseIntro, { passive: true });
-        introScreen.addEventListener('touchstart', handleCloseIntro, { passive: true });
-        window.addEventListener('keydown', handleCloseIntro, { passive: true });
-
-        // Auto-dismiss safety timer after 1 second so it never gets stuck
-        setTimeout(handleCloseIntro, 1000);
+        introScreen.addEventListener('click', closeIntroScreen);
+        introScreen.addEventListener('touchstart', closeIntroScreen, { passive: true });
 
         // 2. Mouse Glow Effect
         const cursorGlow = document.getElementById('cursorGlow');
@@ -535,7 +537,7 @@
         resizeCanvas();
         drawStars();
 
-        // 4. Kick Live Status Checker
+        // 4. Kick Live Status Check
         async function checkKickLiveStatus() {
             const channelName = 'devidtur';
             const statusBadge = document.getElementById('statusBadge');
