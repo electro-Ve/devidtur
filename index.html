@@ -132,7 +132,6 @@
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, filter 0.6s ease;
         }
 
-        /* אפקט התפוררות הלוגו */
         .intro-avatar.disintegrate {
             transform: scale(1.35);
             opacity: 0;
@@ -188,7 +187,7 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* TOP NAV BAR - סדר: קליפס מימין, לינקים באמצע, אימוטס משמאל */
+        /* TOP NAV BAR */
         .top-nav {
             display: flex;
             gap: 8px;
@@ -373,7 +372,7 @@
 </head>
 <body>
 
-    <!-- Intro Screen with Particle Disintegration Canvas -->
+    <!-- Intro Screen -->
     <div id="introScreen">
         <canvas id="disintegrateCanvas"></canvas>
         <div class="intro-logo-container">
@@ -394,7 +393,7 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- התפריט העליון: CLIPS מימין, LINKS באמצע, EMOTES משמאל -->
+        <!-- התפריט העליון -->
         <div class="top-nav">
             <button class="nav-btn" onclick="switchTab('clipsTab', this)">CLIPS</button>
             <button class="nav-btn active" onclick="switchTab('linksTab', this)">LINKS</button>
@@ -418,7 +417,7 @@
             </a>
         </div>
 
-        <!-- TAB 2: LINKS (נפתח כברירת מחדל) -->
+        <!-- TAB 2: LINKS -->
         <div id="linksTab" class="tab-content active">
             <a href="https://kick.com/devidtur" target="_blank" class="link-card kick">
                 <div class="link-content">
@@ -446,42 +445,42 @@
             </a>
         </div>
 
-        <!-- TAB 3: EMOTES -->
+        <!-- TAB 3: EMOTES (הקישורים החדשים מעודכנים פה) -->
         <div id="emotesTab" class="tab-content">
             <div class="section-header">
                 <span>אימוטים ובאדג'ים של סאבים</span>
             </div>
             <div class="emotes-grid">
                 <div class="emote-item">
-                    <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237131399397386/2cd43413218e2eb5.png?ex=6ab8844d&is=6ab732cd&hm=2210a619f0913e940ab39b919a3f025067cbbfb56bd5dfd3f402a9202f18b877&" alt="Emote">
+                    <img src="https://ibb.co/DfHphTQp" alt="Bear Cigar">
                     <span class="emote-name">Bear Cigar</span>
                 </div>
                 <div class="emote-item">
-                    <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237131684614194/8e386bf1a6dbb082.png?ex=6ab8844d&is=6ab732cd&hm=46ce2a21bcabd5130a3b31414358fe6e9073fbc7807974a18e4c145ae56a86d8&" alt="Emote">
+                    <img src="https://ibb.co/XfFRQxT3" alt="Devid Hoodie">
                     <span class="emote-name">Devid Hoodie</span>
                 </div>
                 <div class="emote-item">
-                    <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237132007448586/bf3b135e71126d92.png?ex=6ab8844e&is=6ab732ce&hm=0a5bdde31d60718f88fe0a303b01f24f863ddadc64895c59be521c482ca805e7&" alt="Emote">
+                    <img src="https://ibb.co/hRsdKCzH" alt="Pika Mew">
                     <span class="emote-name">Pika Mew</span>
                 </div>
                 <div class="emote-item">
-                    <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237132439453746/fdde141bcecc8b28.png?ex=6ab8844e&is=6ab732ce&hm=706511ca2398c70f9cd1669f37dd36eeae5795d31a0a9e4d17c67d23869feb8b&" alt="Emote">
+                    <img src="https://ibb.co/twNQPRQJ" alt="Bear AK">
                     <span class="emote-name">Bear AK</span>
                 </div>
                 <div class="emote-item">
-                    <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237132737384469/e4cfe076eea1e91f.png?ex=6ab8844e&is=6ab732ce&hm=1ba4d738ebf94b5aaa9f3fe57f7c81c93151c3be05bda2e936f9b5031f3808c1&" alt="Emote">
+                    <img src="https://ibb.co/JRBCjsTD" alt="Rage vs Bear">
                     <span class="emote-name">Rage vs Bear</span>
                 </div>
                 <div class="emote-item">
-                    <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237133064544286/5108da1163a29bf5.png?ex=6ab8844e&is=6ab732ce&hm=7126c5bead4421daad84329d3cf571e2362b39d2e00551fef5c3beb288942b95&" alt="Emote">
+                    <img src="https://ibb.co/6c8CHmXm" alt="Bear Grenade">
                     <span class="emote-name">Bear Grenade</span>
                 </div>
                 <div class="emote-item">
-                    <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237133454745610/97df80c7cb6fc4bc.png?ex=6ab8844e&is=6ab732ce&hm=0982f8e87d50a5d0a78973abf4263a31f2e716c602bafc9a8b31dcd5db5ae852&" alt="Emote">
+                    <img src="https://ibb.co/r2LRhZXS" alt="Bear Heart">
                     <span class="emote-name">Bear Heart</span>
                 </div>
                 <div class="emote-item">
-                    <img src="https://cdn.discordapp.com/attachments/1553235950186930270/1553237134062649344/fullsize.png?ex=6ab8844e&is=6ab732ce&hm=e35caf6f0505d6cfad50b6e73ad542b1505bddfd981bc7066021b0913ecfb868&" alt="Emote">
+                    <img src="https://ibb.co/NdBTpYMH" alt="Bear Crying">
                     <span class="emote-name">Bear Crying</span>
                 </div>
             </div>
@@ -492,7 +491,6 @@
 
     <!-- Scripts -->
     <script>
-        // אפקט התפוררות חלקיקים בלוגו בכניסה
         function runDisintegrationIntro() {
             const canvas = document.getElementById('disintegrateCanvas');
             if (!canvas) return;
@@ -508,7 +506,6 @@
             const colors = ['#00d2ff', '#7928ca', '#53fc18', '#ffffff', '#00e5ff'];
             const particleCount = 220;
 
-            // יצירת חלקיקי התפוררות שמגיעים מהלוגו
             for (let i = 0; i < particleCount; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const speed = Math.random() * 9 + 3;
@@ -529,13 +526,11 @@
 
             let animating = false;
 
-            // הפעלת האפקט לאחר רגע קצר
             setTimeout(function() {
                 const avatar = document.getElementById('introAvatar');
                 if (avatar) avatar.classList.add('disintegrate');
                 animating = true;
 
-                // העלמת המסך העליון
                 setTimeout(function() {
                     const introScreen = document.getElementById('introScreen');
                     if (introScreen) {
@@ -553,7 +548,7 @@
                         if (p.alpha > 0) {
                             p.x += p.vx;
                             p.y += p.vy;
-                            p.vx *= 0.96; // חיכוך להאטה מציאותית
+                            p.vx *= 0.96;
                             p.vy *= 0.96;
                             p.alpha -= p.decay;
                             p.rotation += p.vRot;
@@ -578,7 +573,6 @@
 
         window.addEventListener('load', runDisintegrationIntro);
 
-        // אפקט זוהר עוקב אחרי העכבר
         const cursorGlow = document.getElementById('cursorGlow');
         let mouseX = 0, mouseY = 0;
         let currentX = 0, currentY = 0;
@@ -599,7 +593,6 @@
         }
         animateCursor();
 
-        // רקע כוכבים
         const canvas = document.getElementById('starsCanvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -651,7 +644,6 @@
         resizeCanvas();
         drawStars();
 
-        // מעבר בין קטגוריות
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(function(tab) { tab.classList.remove('active'); });
             document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
